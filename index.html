@@ -51,23 +51,34 @@
       }
     }
 
+    html { scroll-behavior: smooth; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg-tertiary);
       color: var(--text-primary);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* NAV */
+    /* ── NAV ── */
     .nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 32px;
+      padding: 14px 24px;
       background: var(--bg-primary);
       border-bottom: 0.5px solid var(--border);
-      position: sticky; top: 0; z-index: 100;
+      position: sticky; top: 0; z-index: 200;
     }
     .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; }
-    .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+    .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+    /* hamburger — shown only on mobile */
+    .nav-toggle {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      color: var(--text-primary); font-size: 22px; padding: 4px;
+    }
+
     .nav-links { display: flex; gap: 24px; }
     .nav-links a {
       font-size: 13px; color: var(--text-secondary);
@@ -75,9 +86,28 @@
     }
     .nav-links a:hover { color: var(--text-primary); }
 
-    /* HERO */
+    /* mobile nav */
+    @media (max-width: 600px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--bg-primary);
+        border-bottom: 0.5px solid var(--border);
+        flex-direction: column; gap: 0;
+        padding: 8px 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        padding: 12px 24px; font-size: 15px;
+        border-bottom: 0.5px solid var(--border);
+      }
+      .nav-links a:last-child { border-bottom: none; }
+    }
+
+    /* ── HERO ── */
     .hero {
-      padding: 80px 32px 64px;
+      padding: 64px 24px 56px;
       max-width: 900px; margin: 0 auto; text-align: center;
     }
     .hero h1 {
@@ -90,32 +120,45 @@
       max-width: 620px; margin: 0 auto 36px;
     }
     .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
     .btn-primary {
       background: var(--green-dark); color: var(--green-light);
       border: none; border-radius: var(--radius-md);
-      padding: 10px 22px; font-size: 14px; cursor: pointer;
+      padding: 12px 24px; font-size: 15px; cursor: pointer;
       font-family: inherit; display: inline-flex; align-items: center; gap: 6px;
+      min-height: 48px;
     }
     .btn-primary:hover { background: var(--green); }
     .btn-secondary {
       background: transparent; color: var(--text-primary);
       border: 0.5px solid var(--border-strong);
-      border-radius: var(--radius-md); padding: 10px 22px;
-      font-size: 14px; cursor: pointer; font-family: inherit;
+      border-radius: var(--radius-md); padding: 12px 24px;
+      font-size: 15px; cursor: pointer; font-family: inherit;
       display: inline-flex; align-items: center; gap: 6px;
+      min-height: 48px;
     }
     .btn-secondary:hover { background: var(--bg-secondary); }
 
-    /* METRICS */
+    @media (max-width: 600px) {
+      .hero { padding: 48px 20px 40px; }
+      .hero h1 { font-size: 30px; }
+      .hero-sub { font-size: 15px; }
+      .hero-cta { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 320px; justify-content: center; }
+    }
+
+    /* ── METRICS ── */
     .metrics {
-      padding: 48px 32px;
+      padding: 40px 24px;
       background: var(--bg-primary);
       border-top: 0.5px solid var(--border);
       border-bottom: 0.5px solid var(--border);
     }
     .metrics-inner {
       max-width: 900px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
     }
     .metric-card {
       background: var(--bg-secondary); border-radius: var(--radius-md);
@@ -127,13 +170,18 @@
     }
     .metric-label { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 
-    /* SECTIONS */
-    .section { padding: 64px 32px; max-width: 900px; margin: 0 auto; }
+    @media (max-width: 600px) {
+      .metrics-inner { grid-template-columns: repeat(2, 1fr); }
+      .metric-val { font-size: 22px; }
+    }
+
+    /* ── GENERIC SECTIONS ── */
+    .section { padding: 56px 24px; max-width: 900px; margin: 0 auto; }
     .section-on-white {
       background: var(--bg-primary);
       border-top: 0.5px solid var(--border);
       border-bottom: 0.5px solid var(--border);
-      padding: 64px 32px;
+      padding: 56px 24px;
     }
     .section-inner { max-width: 900px; margin: 0 auto; }
     .section-label {
@@ -143,20 +191,38 @@
     .section-title { font-size: 26px; font-weight: 500; margin-bottom: 10px; }
     .section-sub {
       font-size: 15px; color: var(--text-secondary); line-height: 1.7;
-      margin-bottom: 36px; max-width: 600px;
+      margin-bottom: 32px; max-width: 600px;
     }
 
-    /* ARCHITECTURE */
+    @media (max-width: 600px) {
+      .section { padding: 40px 20px; }
+      .section-on-white { padding: 40px 20px; }
+      .section-title { font-size: 22px; }
+    }
+
+    /* ── ARCHITECTURE ── */
     .arch-wrapper {
       background: var(--bg-primary);
       border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 28px;
+      border-radius: var(--radius-lg); padding: 24px;
     }
+
+    /* desktop: horizontal row */
     .arch-grid {
       display: grid;
       grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr;
-      align-items: center; gap: 0;
+      align-items: center;
     }
+
+    /* mobile: vertical stack — hide arrows, show boxes only */
+    @media (max-width: 700px) {
+      .arch-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .arch-arrow { display: none; }
+    }
+
     .arch-box {
       background: var(--bg-secondary);
       border: 0.5px solid var(--border-strong);
@@ -169,24 +235,36 @@
     .arch-box-title.green { color: var(--green); }
     .arch-box-sub { font-size: 11px; color: var(--text-secondary); }
     .arch-arrow { font-size: 18px; color: var(--text-tertiary); text-align: center; }
+
     .arch-layers {
       margin-top: 20px;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
     }
+    @media (max-width: 500px) {
+      .arch-layers { grid-template-columns: 1fr 1fr; }
+    }
+
     .layer-card {
       border-radius: var(--radius-md); padding: 14px;
       border: 0.5px solid var(--border);
     }
-    .layer-card.ml     { border-left: 3px solid var(--green); }
-    .layer-card.sur    { border-left: 3px solid var(--blue); }
-    .layer-card.zeek   { border-left: 3px solid var(--purple); }
-    .layer-card.rules  { border-left: 3px solid var(--amber); }
+    .layer-card.ml   { border-left: 3px solid var(--green); }
+    .layer-card.sur  { border-left: 3px solid var(--blue); }
+    .layer-card.zeek { border-left: 3px solid var(--purple); }
+    .layer-card.rules{ border-left: 3px solid var(--amber); }
     .layer-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
     .layer-desc { font-size: 11px; color: var(--text-secondary); }
 
-    /* RESULTS */
+    /* ── RESULTS ── */
     .results-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 500px) {
+      .results-grid { grid-template-columns: 1fr; }
     }
     .result-card {
       background: var(--bg-primary);
@@ -197,30 +275,40 @@
     .result-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
     .result-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
 
-    /* TECH STACK */
+    /* ── TECH STACK ── */
     .tech-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    @media (max-width: 500px) {
+      .tech-grid { grid-template-columns: repeat(3, 1fr); }
     }
     .tech-card {
       background: var(--bg-primary);
       border: 0.5px solid var(--border);
-      border-radius: var(--radius-md); padding: 16px 12px; text-align: center;
+      border-radius: var(--radius-md); padding: 16px 10px; text-align: center;
     }
-    .tech-icon { font-size: 24px; color: var(--text-secondary); margin-bottom: 8px; }
-    .tech-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+    .tech-icon { font-size: 22px; color: var(--text-secondary); margin-bottom: 8px; }
+    .tech-name { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
     .tech-role { font-size: 11px; color: var(--text-secondary); }
 
-    /* TEAM */
+    /* ── TEAM ── */
     .team-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 500px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
     }
     .team-card {
       background: var(--bg-primary);
       border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 20px 16px; text-align: center;
+      border-radius: var(--radius-lg); padding: 20px 14px; text-align: center;
     }
     .avatar {
-      width: 48px; height: 48px; border-radius: 50%;
+      width: 46px; height: 46px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 14px; font-weight: 500; margin: 0 auto 12px;
     }
@@ -229,22 +317,29 @@
     .av-purple { background: var(--purple-light); color: var(--purple-dark); }
     .av-amber  { background: var(--amber-light);  color: var(--amber-dark); }
     .av-teal   { background: var(--green-light);  color: var(--green-deep); }
-    .team-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+    .team-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
     .team-id   { font-size: 11px; color: var(--text-tertiary); margin-bottom: 6px; }
     .team-role-badge {
       display: inline-block; font-size: 11px; padding: 3px 10px;
       border-radius: 99px; background: var(--bg-secondary);
       color: var(--text-secondary); border: 0.5px solid var(--border);
     }
+    .team-email {
+      margin-top: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      font-size: 11px; color: var(--green-dark); text-decoration: none;
+      word-break: break-all;
+    }
+    .team-email:hover { text-decoration: underline; }
 
-    /* DIVIDER */
+    /* ── DIVIDER ── */
     .divider { height: 0.5px; background: var(--border); max-width: 900px; margin: 0 auto; }
 
-    /* FOOTER */
+    /* ── FOOTER ── */
     .footer {
       background: var(--bg-primary);
       border-top: 0.5px solid var(--border);
-      padding: 32px; text-align: center;
+      padding: 28px 24px; text-align: center;
     }
     .footer-text { font-size: 13px; color: var(--text-secondary); }
     .footer-text span { color: var(--green); }
@@ -258,11 +353,14 @@
     <div class="logo-dot"></div>
     AI Cybersecurity Lab
   </div>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="this.nextElementSibling.classList.toggle('open')">
+    <i class="ti ti-menu-2"></i>
+  </button>
   <div class="nav-links">
-    <a href="#architecture">Architecture</a>
-    <a href="#results">Results</a>
-    <a href="#tech">Tech Stack</a>
-    <a href="#team">Team</a>
+    <a href="#architecture" onclick="this.closest('.nav-links').classList.remove('open')">Architecture</a>
+    <a href="#results"      onclick="this.closest('.nav-links').classList.remove('open')">Results</a>
+    <a href="#tech"         onclick="this.closest('.nav-links').classList.remove('open')">Tech Stack</a>
+    <a href="#team"         onclick="this.closest('.nav-links').classList.remove('open')">Team</a>
   </div>
 </nav>
 
@@ -308,25 +406,25 @@
       <div class="arch-box">
         <div class="arch-icon"><i class="ti ti-skull"></i></div>
         <div class="arch-box-title">Kali Linux</div>
-        <div class="arch-box-sub">Adversary node<br>WAN 192.168.180.x</div>
+        <div class="arch-box-sub">Adversary node · WAN 192.168.180.x</div>
       </div>
       <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
       <div class="arch-box">
         <div class="arch-icon"><i class="ti ti-wall"></i></div>
         <div class="arch-box-title">pfSense</div>
-        <div class="arch-box-sub">DMZ edge<br>WAN 180.129</div>
+        <div class="arch-box-sub">DMZ edge · WAN 180.129</div>
       </div>
       <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
       <div class="arch-box highlight">
         <div class="arch-icon"><i class="ti ti-cpu"></i></div>
         <div class="arch-box-title green">Ubuntu AI Server</div>
-        <div class="arch-box-sub">Defense engine<br>192.168.150.10</div>
+        <div class="arch-box-sub">Defense engine · 192.168.150.10</div>
       </div>
       <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
       <div class="arch-box">
         <div class="arch-icon"><i class="ti ti-device-desktop"></i></div>
         <div class="arch-box-title">Client LAN</div>
-        <div class="arch-box-sub">Win11 / Win10<br>Protected targets</div>
+        <div class="arch-box-sub">Win11 / Win10 · Protected targets</div>
       </div>
     </div>
     <div class="arch-layers">
@@ -421,7 +519,7 @@
 <div class="section-on-white">
   <div id="team" class="section-inner">
     <p class="section-label">Team</p>
-    <h2 class="section-title">CS 27 — Modern Academy in Maadi</h2>
+    <h2 class="section-title">Meet the team</h2>
     <p class="section-sub">Five members across cybersecurity operations, AI & machine learning, and network engineering.</p>
     <div class="team-grid">
       <div class="team-card">
@@ -429,6 +527,10 @@
         <div class="team-name">Ahmed Mostafa Hussein</div>
         <div class="team-id">12300078</div>
         <div class="team-role-badge">Cybersecurity Lead</div>
+        <a href="mailto:a7medmostafa7777@gmail.com" class="team-email">
+          <i class="ti ti-mail" style="font-size:13px;flex-shrink:0"></i>
+          a7medmostafa7777@gmail.com
+        </a>
       </div>
       <div class="team-card">
         <div class="avatar av-blue">HE</div>
@@ -461,7 +563,6 @@
 <!-- FOOTER -->
 <div class="footer">
   <p class="footer-text">AI-Powered Cybersecurity Lab — <span>CS 27</span> — Modern Academy in Maadi — 2025–2026</p>
-  <p class="footer-text" style="margin-top:6px">Built on open-source tools: GNS3 · pfSense · Suricata · Zeek · XGBoost · Python</p>
 </div>
 
 </body>
