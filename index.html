@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Powered Cybersecurity Lab — CS 27</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary:    #ffffff;
+      --bg-secondary:  #f5f5f4;
+      --bg-tertiary:   #f0efed;
+      --text-primary:  #1a1a18;
+      --text-secondary:#57564f;
+      --text-tertiary: #8a8880;
+      --border:        rgba(0,0,0,0.10);
+      --border-strong: rgba(0,0,0,0.18);
+      --green:         #1D9E75;
+      --green-dark:    #0F6E56;
+      --green-deep:    #085041;
+      --green-light:   #E1F5EE;
+      --blue:          #378ADD;
+      --blue-dark:     #185FA5;
+      --blue-light:    #E6F1FB;
+      --purple:        #7F77DD;
+      --purple-dark:   #534AB7;
+      --purple-light:  #EEEDFE;
+      --amber:         #BA7517;
+      --amber-dark:    #854F0B;
+      --amber-light:   #FAEEDA;
+      --radius-md:     8px;
+      --radius-lg:     12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary:    #1c1c1a;
+        --bg-secondary:  #252523;
+        --bg-tertiary:   #2c2c2a;
+        --text-primary:  #f0efed;
+        --text-secondary:#b4b2a9;
+        --text-tertiary: #888780;
+        --border:        rgba(255,255,255,0.10);
+        --border-strong: rgba(255,255,255,0.18);
+        --green-light:   #04342C;
+        --blue-light:    #042C53;
+        --purple-light:  #26215C;
+        --amber-light:   #412402;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 32px;
+      background: var(--bg-primary);
+      border-bottom: 0.5px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; }
+    .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      font-size: 13px; color: var(--text-secondary);
+      text-decoration: none; cursor: pointer;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    /* HERO */
+    .hero {
+      padding: 80px 32px 64px;
+      max-width: 900px; margin: 0 auto; text-align: center;
+    }
+    .hero h1 {
+      font-size: 42px; font-weight: 500; line-height: 1.2;
+      margin-bottom: 16px; letter-spacing: -0.5px;
+    }
+    .hero h1 span { color: var(--green); }
+    .hero-sub {
+      font-size: 16px; color: var(--text-secondary); line-height: 1.7;
+      max-width: 620px; margin: 0 auto 36px;
+    }
+    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green-dark); color: var(--green-light);
+      border: none; border-radius: var(--radius-md);
+      padding: 10px 22px; font-size: 14px; cursor: pointer;
+      font-family: inherit; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary:hover { background: var(--green); }
+    .btn-secondary {
+      background: transparent; color: var(--text-primary);
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-md); padding: 10px 22px;
+      font-size: 14px; cursor: pointer; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-secondary:hover { background: var(--bg-secondary); }
+
+    /* METRICS */
+    .metrics {
+      padding: 48px 32px;
+      background: var(--bg-primary);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .metrics-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;
+    }
+    .metric-card {
+      background: var(--bg-secondary); border-radius: var(--radius-md);
+      padding: 20px 16px; text-align: center;
+    }
+    .metric-val {
+      font-size: 26px; font-weight: 500; color: var(--green);
+      display: block; margin-bottom: 4px;
+    }
+    .metric-label { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+
+    /* SECTIONS */
+    .section { padding: 64px 32px; max-width: 900px; margin: 0 auto; }
+    .section-on-white {
+      background: var(--bg-primary);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      padding: 64px 32px;
+    }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 12px;
+    }
+    .section-title { font-size: 26px; font-weight: 500; margin-bottom: 10px; }
+    .section-sub {
+      font-size: 15px; color: var(--text-secondary); line-height: 1.7;
+      margin-bottom: 36px; max-width: 600px;
+    }
+
+    /* ARCHITECTURE */
+    .arch-wrapper {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+    }
+    .arch-grid {
+      display: grid;
+      grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr;
+      align-items: center; gap: 0;
+    }
+    .arch-box {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 14px 10px; text-align: center;
+    }
+    .arch-box.highlight { border-color: var(--green); border-width: 1.5px; }
+    .arch-icon { font-size: 22px; color: var(--text-secondary); margin-bottom: 8px; }
+    .arch-box-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+    .arch-box-title.green { color: var(--green); }
+    .arch-box-sub { font-size: 11px; color: var(--text-secondary); }
+    .arch-arrow { font-size: 18px; color: var(--text-tertiary); text-align: center; }
+    .arch-layers {
+      margin-top: 20px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;
+    }
+    .layer-card {
+      border-radius: var(--radius-md); padding: 14px;
+      border: 0.5px solid var(--border);
+    }
+    .layer-card.ml     { border-left: 3px solid var(--green); }
+    .layer-card.sur    { border-left: 3px solid var(--blue); }
+    .layer-card.zeek   { border-left: 3px solid var(--purple); }
+    .layer-card.rules  { border-left: 3px solid var(--amber); }
+    .layer-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+    .layer-desc { font-size: 11px; color: var(--text-secondary); }
+
+    /* RESULTS */
+    .results-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
+    }
+    .result-card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 20px;
+    }
+    .result-icon { font-size: 22px; margin-bottom: 10px; color: var(--green); }
+    .result-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+    .result-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* TECH STACK */
+    .tech-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;
+    }
+    .tech-card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); padding: 16px 12px; text-align: center;
+    }
+    .tech-icon { font-size: 24px; color: var(--text-secondary); margin-bottom: 8px; }
+    .tech-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+    .tech-role { font-size: 11px; color: var(--text-secondary); }
+
+    /* TEAM */
+    .team-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;
+    }
+    .team-card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 20px 16px; text-align: center;
+    }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 500; margin: 0 auto 12px;
+    }
+    .av-green  { background: var(--green-light);  color: var(--green-dark); }
+    .av-blue   { background: var(--blue-light);   color: var(--blue-dark); }
+    .av-purple { background: var(--purple-light); color: var(--purple-dark); }
+    .av-amber  { background: var(--amber-light);  color: var(--amber-dark); }
+    .av-teal   { background: var(--green-light);  color: var(--green-deep); }
+    .team-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+    .team-id   { font-size: 11px; color: var(--text-tertiary); margin-bottom: 6px; }
+    .team-role-badge {
+      display: inline-block; font-size: 11px; padding: 3px 10px;
+      border-radius: 99px; background: var(--bg-secondary);
+      color: var(--text-secondary); border: 0.5px solid var(--border);
+    }
+
+    /* DIVIDER */
+    .divider { height: 0.5px; background: var(--border); max-width: 900px; margin: 0 auto; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--bg-primary);
+      border-top: 0.5px solid var(--border);
+      padding: 32px; text-align: center;
+    }
+    .footer-text { font-size: 13px; color: var(--text-secondary); }
+    .footer-text span { color: var(--green); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="logo-dot"></div>
+    AI Cybersecurity Lab
+  </div>
+  <div class="nav-links">
+    <a href="#architecture">Architecture</a>
+    <a href="#results">Results</a>
+    <a href="#tech">Tech Stack</a>
+    <a href="#team">Team</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>AI-Powered<br><span>Cybersecurity Lab</span></h1>
+  <p class="hero-sub">
+    An integrated multi-layer network defense system using machine learning, intrusion detection,
+    and automated firewall mitigation — validated across 240 live attack trials with 100% detection rate.
+  </p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="document.getElementById('architecture').scrollIntoView({behavior:'smooth'})">
+      <i class="ti ti-shield"></i> Explore System
+    </button>
+    <button class="btn-secondary" onclick="document.getElementById('results').scrollIntoView({behavior:'smooth'})">
+      <i class="ti ti-chart-bar"></i> View Results
+    </button>
+  </div>
+</div>
+
+<!-- METRICS -->
+<div class="metrics">
+  <div class="metrics-inner">
+    <div class="metric-card"><span class="metric-val">98.94%</span><span class="metric-label">XGBoost accuracy on 16,000-sample test set</span></div>
+    <div class="metric-card"><span class="metric-val">872 ms</span><span class="metric-label">Mean time to mitigation across all trials</span></div>
+    <div class="metric-card"><span class="metric-val">240/240</span><span class="metric-label">Live attack trials — 100% detection rate</span></div>
+    <div class="metric-card"><span class="metric-val">80,000</span><span class="metric-label">Custom labeled dataset samples from live network</span></div>
+    <div class="metric-card"><span class="metric-val">4 Layers</span><span class="metric-label">XGBoost + Suricata + Zeek + Heuristics</span></div>
+    <div class="metric-card"><span class="metric-val">8 Classes</span><span class="metric-label">Attack categories covered end-to-end</span></div>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div id="architecture" class="section">
+  <p class="section-label">Architecture</p>
+  <h2 class="section-title">Multi-layer network defense</h2>
+  <p class="section-sub">
+    Four detection engines run concurrently under a Python orchestration engine.
+    On Tier-3 confirmation, the system autonomously blocks the attacker via SSH-driven pfSense firewall rules.
+  </p>
+  <div class="arch-wrapper">
+    <div class="arch-grid">
+      <div class="arch-box">
+        <div class="arch-icon"><i class="ti ti-skull"></i></div>
+        <div class="arch-box-title">Kali Linux</div>
+        <div class="arch-box-sub">Adversary node<br>WAN 192.168.180.x</div>
+      </div>
+      <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="arch-box">
+        <div class="arch-icon"><i class="ti ti-wall"></i></div>
+        <div class="arch-box-title">pfSense</div>
+        <div class="arch-box-sub">DMZ edge<br>WAN 180.129</div>
+      </div>
+      <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="arch-box highlight">
+        <div class="arch-icon"><i class="ti ti-cpu"></i></div>
+        <div class="arch-box-title green">Ubuntu AI Server</div>
+        <div class="arch-box-sub">Defense engine<br>192.168.150.10</div>
+      </div>
+      <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="arch-box">
+        <div class="arch-icon"><i class="ti ti-device-desktop"></i></div>
+        <div class="arch-box-title">Client LAN</div>
+        <div class="arch-box-sub">Win11 / Win10<br>Protected targets</div>
+      </div>
+    </div>
+    <div class="arch-layers">
+      <div class="layer-card ml">
+        <div class="layer-name"><i class="ti ti-brain"></i> XGBoost ML</div>
+        <div class="layer-desc">Behavioral flow classification — 98.94% accuracy, 11,200 samples/sec</div>
+      </div>
+      <div class="layer-card sur">
+        <div class="layer-name"><i class="ti ti-eye"></i> Suricata IDS</div>
+        <div class="layer-desc">Signature-based detection — ET Open ruleset, 40,000+ rules</div>
+      </div>
+      <div class="layer-card zeek">
+        <div class="layer-name"><i class="ti ti-activity"></i> Zeek Monitor</div>
+        <div class="layer-desc">Protocol-level anomaly analysis and behavioral notices</div>
+      </div>
+      <div class="layer-card rules">
+        <div class="layer-name"><i class="ti ti-adjustments"></i> Rule Heuristics</div>
+        <div class="layer-desc">Fast threshold-driven detection — SYN flood, port scan, brute force</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- RESULTS -->
+<div class="section-on-white">
+  <div id="results" class="section-inner">
+    <p class="section-label">Results</p>
+    <h2 class="section-title">Key findings</h2>
+    <p class="section-sub">
+      Validated through 240 independent live-attack trials — the first live-validated closed-loop
+      hybrid IDS with ML-integrated automated firewall mitigation in the reviewed literature.
+    </p>
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-icon"><i class="ti ti-check"></i></div>
+        <div class="result-title">100% detection rate</div>
+        <div class="result-desc">240 out of 240 attacks detected and mitigated across all 8 attack categories, 30 trials each.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-icon"><i class="ti ti-clock"></i></div>
+        <div class="result-title">872 ms mean MTTM</div>
+        <div class="result-desc">Fastest: DDoS/SYN Flood at 743 ms. Slowest: DataExfil at 958 ms requiring full 120s analysis window.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-icon"><i class="ti ti-brain"></i></div>
+        <div class="result-title">98.94% ML accuracy</div>
+        <div class="result-desc">Macro F1-score 0.9892 across 8 classes. Top feature: flow_packets_s. Lowest: WebAttack F1 = 0.9814.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-icon"><i class="ti ti-database"></i></div>
+        <div class="result-title">Zero dataset shift</div>
+        <div class="result-desc">Training data generated from the exact same live GNS3/VMware environment — no benchmark generalization gap.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-icon"><i class="ti ti-layers-subtract"></i></div>
+        <div class="result-title">Full 8/8 coverage</div>
+        <div class="result-desc">Suricata alone: 6/8. Zeek alone: 4/8. ML alone: 8/8. Combined with layered confirmation: 8/8.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-icon"><i class="ti ti-lock"></i></div>
+        <div class="result-title">Sub-5ms firewall block</div>
+        <div class="result-desc">SSH-driven pfctl injection into pfSense EasyRuleBlockHostsWAN executes in under 5 ms post-command.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<div id="tech" class="section">
+  <p class="section-label">Technology stack</p>
+  <h2 class="section-title">Open-source tools, enterprise-grade results</h2>
+  <p class="section-sub">Every component is freely deployable — no proprietary licensing required.</p>
+  <div class="tech-grid">
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-chart-dots"></i></div><div class="tech-name">XGBoost 2.0.3</div><div class="tech-role">ML classifier</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-eye"></i></div><div class="tech-name">Suricata 8.0.3</div><div class="tech-role">Signature IDS</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-activity"></i></div><div class="tech-name">Zeek 8.1.1</div><div class="tech-role">Network monitor</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-wall"></i></div><div class="tech-name">pfSense 2.7.2</div><div class="tech-role">Firewall / NAT</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-topology-star"></i></div><div class="tech-name">GNS3</div><div class="tech-role">Network simulator</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-server"></i></div><div class="tech-name">VMware 16 Pro</div><div class="tech-role">Hypervisor</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-brand-python"></i></div><div class="tech-name">Python 3.10</div><div class="tech-role">Orchestration</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-antenna"></i></div><div class="tech-name">Scapy v2.5.0</div><div class="tech-role">Packet capture</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-skull"></i></div><div class="tech-name">Kali 2025.2</div><div class="tech-role">Adversary node</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ti ti-device-laptop"></i></div><div class="tech-name">Ubuntu 24.04</div><div class="tech-role">AI server OS</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TEAM -->
+<div class="section-on-white">
+  <div id="team" class="section-inner">
+    <p class="section-label">Team</p>
+    <h2 class="section-title">CS 27 — Modern Academy in Maadi</h2>
+    <p class="section-sub">Five members across cybersecurity operations, AI & machine learning, and network engineering.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar av-green">AH</div>
+        <div class="team-name">Ahmed Mostafa Hussein</div>
+        <div class="team-id">12300078</div>
+        <div class="team-role-badge">Cybersecurity Lead</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar av-blue">HE</div>
+        <div class="team-name">Hassan Ehab Ahmed</div>
+        <div class="team-id">12300301</div>
+        <div class="team-role-badge">AI &amp; ML</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar av-purple">YG</div>
+        <div class="team-name">Youssef Gamal Ghoneim</div>
+        <div class="team-id">12300264</div>
+        <div class="team-role-badge">Network Eng.</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar av-amber">KM</div>
+        <div class="team-name">Khaled Mohamed Ahmed</div>
+        <div class="team-id">12300085</div>
+        <div class="team-role-badge">Network Eng.</div>
+      </div>
+      <div class="team-card">
+        <div class="avatar av-teal">AA</div>
+        <div class="team-name">Abdallah Saleh Abdallah</div>
+        <div class="team-id">12300523</div>
+        <div class="team-role-badge">Network Eng.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p class="footer-text">AI-Powered Cybersecurity Lab — <span>CS 27</span> — Modern Academy in Maadi — 2025–2026</p>
+  <p class="footer-text" style="margin-top:6px">Built on open-source tools: GNS3 · pfSense · Suricata · Zeek · XGBoost · Python</p>
+</div>
+
+</body>
+</html>
