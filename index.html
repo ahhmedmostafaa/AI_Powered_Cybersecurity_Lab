@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,165 +8,210 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg-primary:    #ffffff;
-      --bg-secondary:  #f5f5f4;
-      --bg-tertiary:   #f0efed;
-      --text-primary:  #1a1a18;
-      --text-secondary:#57564f;
-      --text-tertiary: #8a8880;
-      --border:        rgba(0,0,0,0.10);
-      --border-strong: rgba(0,0,0,0.18);
-      --green:         #1D9E75;
-      --green-dark:    #0F6E56;
-      --green-deep:    #085041;
-      --green-light:   #E1F5EE;
-      --blue:          #378ADD;
-      --blue-dark:     #185FA5;
-      --blue-light:    #E6F1FB;
-      --purple:        #7F77DD;
-      --purple-dark:   #534AB7;
-      --purple-light:  #EEEDFE;
-      --amber:         #BA7517;
-      --amber-dark:    #854F0B;
-      --amber-light:   #FAEEDA;
-      --radius-md:     8px;
-      --radius-lg:     12px;
+    /* ── BROCHURE COLOR SYSTEM ── */
+    :root[data-theme="dark"] {
+      --bg-page:       #07111f;
+      --bg-primary:    #0d1e35;
+      --bg-secondary:  #112240;
+      --bg-card:       #0f2545;
+      --bg-card-hover: #153060;
+      --text-primary:  #e8f4fd;
+      --text-secondary:#8ab4d4;
+      --text-muted:    #4a7a9b;
+      --border:        rgba(0,180,216,0.15);
+      --border-strong: rgba(0,180,216,0.30);
+      --accent:        #00B4D8;
+      --accent-dark:   #0077A8;
+      --accent-light:  rgba(0,180,216,0.12);
+      --accent2:       #4FC3F7;
+      --gold:          #F4C542;
+      --gold-dim:      rgba(244,197,66,0.15);
+      --navy:          #1565C0;
+      --hero-grad-a:   #07111f;
+      --hero-grad-b:   #0d2550;
+      --glow:          rgba(0,180,216,0.25);
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-primary:    #1c1c1a;
-        --bg-secondary:  #252523;
-        --bg-tertiary:   #2c2c2a;
-        --text-primary:  #f0efed;
-        --text-secondary:#b4b2a9;
-        --text-tertiary: #888780;
-        --border:        rgba(255,255,255,0.10);
-        --border-strong: rgba(255,255,255,0.18);
-        --green-light:   #04342C;
-        --blue-light:    #042C53;
-        --purple-light:  #26215C;
-        --amber-light:   #412402;
-      }
+    :root[data-theme="light"] {
+      --bg-page:       #f0f6ff;
+      --bg-primary:    #ffffff;
+      --bg-secondary:  #e8f2fc;
+      --bg-card:       #ffffff;
+      --bg-card-hover: #dceefb;
+      --text-primary:  #07111f;
+      --text-secondary:#2a5a80;
+      --text-muted:    #5a8aaa;
+      --border:        rgba(21,101,192,0.15);
+      --border-strong: rgba(21,101,192,0.30);
+      --accent:        #0077A8;
+      --accent-dark:   #005580;
+      --accent-light:  rgba(0,119,168,0.10);
+      --accent2:       #1565C0;
+      --gold:          #C8900A;
+      --gold-dim:      rgba(200,144,10,0.12);
+      --navy:          #1565C0;
+      --hero-grad-a:   #e8f2fc;
+      --hero-grad-b:   #d0e8f8;
+      --glow:          rgba(0,119,168,0.15);
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg-tertiary);
+      background: var(--bg-page);
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
     }
 
     /* ── NAV ── */
     .nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 24px;
+      padding: 0 28px; height: 60px;
       background: var(--bg-primary);
-      border-bottom: 0.5px solid var(--border);
+      border-bottom: 1px solid var(--border);
       position: sticky; top: 0; z-index: 200;
+      backdrop-filter: blur(12px);
     }
-    .nav-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; }
-    .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 15px; font-weight: 600; letter-spacing: 0.2px;
+      color: var(--text-primary);
+    }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--navy));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: #fff; flex-shrink: 0;
+    }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a {
+      font-size: 13px; color: var(--text-secondary);
+      text-decoration: none; padding: 6px 12px;
+      border-radius: 6px; transition: background 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); background: var(--accent-light); }
 
-    /* hamburger — shown only on mobile */
+    /* theme toggle */
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-secondary);
+      color: var(--text-secondary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* hamburger */
     .nav-toggle {
-      display: none;
-      background: none; border: none; cursor: pointer;
+      display: none; background: none; border: none; cursor: pointer;
       color: var(--text-primary); font-size: 22px; padding: 4px;
     }
 
-    .nav-links { display: flex; gap: 24px; }
-    .nav-links a {
-      font-size: 13px; color: var(--text-secondary);
-      text-decoration: none; cursor: pointer;
-    }
-    .nav-links a:hover { color: var(--text-primary); }
-
-    /* mobile nav */
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .nav-toggle { display: block; }
       .nav-links {
         display: none;
-        position: absolute; top: 100%; left: 0; right: 0;
+        position: absolute; top: 60px; left: 0; right: 0;
         background: var(--bg-primary);
-        border-bottom: 0.5px solid var(--border);
-        flex-direction: column; gap: 0;
-        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column; gap: 0; padding: 8px 16px 16px;
       }
       .nav-links.open { display: flex; }
-      .nav-links a {
-        padding: 12px 24px; font-size: 15px;
-        border-bottom: 0.5px solid var(--border);
-      }
-      .nav-links a:last-child { border-bottom: none; }
+      .nav-links a { padding: 12px 8px; font-size: 15px; border-radius: 8px; }
     }
 
     /* ── HERO ── */
     .hero {
-      padding: 64px 24px 56px;
-      max-width: 900px; margin: 0 auto; text-align: center;
+      background: linear-gradient(160deg, var(--hero-grad-a) 0%, var(--hero-grad-b) 100%);
+      padding: 80px 24px 70px;
+      text-align: center;
+      position: relative; overflow: hidden;
     }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, var(--glow), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-light);
+      border: 1px solid var(--border-strong);
+      border-radius: 99px; padding: 5px 16px;
+      font-size: 12px; font-weight: 500;
+      color: var(--accent); letter-spacing: 0.5px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
     .hero h1 {
-      font-size: 42px; font-weight: 500; line-height: 1.2;
-      margin-bottom: 16px; letter-spacing: -0.5px;
+      font-size: 52px; font-weight: 700; line-height: 1.1;
+      margin-bottom: 20px; letter-spacing: -1px;
+      position: relative;
     }
-    .hero h1 span { color: var(--green); }
+    .hero h1 .line1 { color: var(--text-primary); }
+    .hero h1 .line2 {
+      color: var(--accent);
+      text-shadow: 0 0 40px var(--glow);
+    }
     .hero-sub {
-      font-size: 16px; color: var(--text-secondary); line-height: 1.7;
-      max-width: 620px; margin: 0 auto 36px;
+      font-size: 17px; color: var(--text-secondary); line-height: 1.75;
+      max-width: 600px; margin: 0 auto 40px;
     }
-    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
+    .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .btn-primary {
-      background: var(--green-dark); color: var(--green-light);
-      border: none; border-radius: var(--radius-md);
-      padding: 12px 24px; font-size: 15px; cursor: pointer;
-      font-family: inherit; display: inline-flex; align-items: center; gap: 6px;
-      min-height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--navy));
+      color: #fff; border: none; border-radius: 10px;
+      padding: 13px 28px; font-size: 15px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 8px;
+      min-height: 48px; box-shadow: 0 4px 20px var(--glow);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .btn-primary:hover { background: var(--green); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--glow); }
     .btn-secondary {
-      background: transparent; color: var(--text-primary);
-      border: 0.5px solid var(--border-strong);
-      border-radius: var(--radius-md); padding: 12px 24px;
-      font-size: 15px; cursor: pointer; font-family: inherit;
-      display: inline-flex; align-items: center; gap: 6px;
-      min-height: 48px;
+      background: transparent; color: var(--accent);
+      border: 1.5px solid var(--accent);
+      border-radius: 10px; padding: 13px 28px;
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      font-family: inherit; display: inline-flex; align-items: center; gap: 8px;
+      min-height: 48px; transition: background 0.2s, transform 0.2s;
     }
-    .btn-secondary:hover { background: var(--bg-secondary); }
+    .btn-secondary:hover { background: var(--accent-light); transform: translateY(-2px); }
 
     @media (max-width: 600px) {
-      .hero { padding: 48px 20px 40px; }
-      .hero h1 { font-size: 30px; }
+      .hero { padding: 56px 20px 52px; }
+      .hero h1 { font-size: 34px; }
       .hero-sub { font-size: 15px; }
       .hero-cta { flex-direction: column; align-items: center; }
       .btn-primary, .btn-secondary { width: 100%; max-width: 320px; justify-content: center; }
     }
 
-    /* ── METRICS ── */
+    /* ── METRICS STRIP ── */
     .metrics {
-      padding: 40px 24px;
       background: var(--bg-primary);
-      border-top: 0.5px solid var(--border);
-      border-bottom: 0.5px solid var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 24px;
     }
     .metrics-inner {
-      max-width: 900px; margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px;
     }
     .metric-card {
-      background: var(--bg-secondary); border-radius: var(--radius-md);
-      padding: 20px 16px; text-align: center;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 22px 16px; text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
     }
+    .metric-card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .metric-val {
-      font-size: 26px; font-weight: 500; color: var(--green);
-      display: block; margin-bottom: 4px;
+      font-size: 28px; font-weight: 700; color: var(--accent);
+      display: block; margin-bottom: 6px;
+      text-shadow: 0 0 20px var(--glow);
     }
     .metric-label { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 
@@ -175,174 +220,195 @@
       .metric-val { font-size: 22px; }
     }
 
-    /* ── GENERIC SECTIONS ── */
-    .section { padding: 56px 24px; max-width: 900px; margin: 0 auto; }
-    .section-on-white {
+    /* ── SECTIONS ── */
+    .section { padding: 72px 24px; max-width: 960px; margin: 0 auto; }
+    .section-on-bg {
       background: var(--bg-primary);
-      border-top: 0.5px solid var(--border);
-      border-bottom: 0.5px solid var(--border);
-      padding: 56px 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 24px;
     }
-    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
     .section-label {
-      font-size: 11px; font-weight: 500; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--green); margin-bottom: 12px;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
     }
-    .section-title { font-size: 26px; font-weight: 500; margin-bottom: 10px; }
+    .section-label::before {
+      content: ''; width: 20px; height: 2px;
+      background: var(--accent); border-radius: 1px;
+    }
+    .section-title { font-size: 30px; font-weight: 700; margin-bottom: 12px; }
     .section-sub {
-      font-size: 15px; color: var(--text-secondary); line-height: 1.7;
-      margin-bottom: 32px; max-width: 600px;
+      font-size: 16px; color: var(--text-secondary); line-height: 1.75;
+      margin-bottom: 36px; max-width: 580px;
     }
 
     @media (max-width: 600px) {
-      .section { padding: 40px 20px; }
-      .section-on-white { padding: 40px 20px; }
-      .section-title { font-size: 22px; }
+      .section { padding: 48px 20px; }
+      .section-on-bg { padding: 48px 20px; }
+      .section-title { font-size: 24px; }
     }
 
     /* ── ARCHITECTURE ── */
     .arch-wrapper {
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 24px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
     }
-
-    /* desktop: horizontal row */
-    .arch-grid {
+    .arch-flow {
       display: grid;
-      grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr;
-      align-items: center;
+      grid-template-columns: 1fr 36px 1fr 36px 1fr 36px 1fr;
+      align-items: center; gap: 0;
     }
-
-    /* mobile: vertical stack — hide arrows, show boxes only */
     @media (max-width: 700px) {
-      .arch-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
+      .arch-flow { grid-template-columns: 1fr; gap: 10px; }
       .arch-arrow { display: none; }
     }
-
     .arch-box {
-      background: var(--bg-secondary);
-      border: 0.5px solid var(--border-strong);
-      border-radius: var(--radius-md);
-      padding: 14px 10px; text-align: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 10px; text-align: center;
+      transition: border-color 0.2s;
     }
-    .arch-box.highlight { border-color: var(--green); border-width: 1.5px; }
-    .arch-icon { font-size: 22px; color: var(--text-secondary); margin-bottom: 8px; }
-    .arch-box-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-    .arch-box-title.green { color: var(--green); }
-    .arch-box-sub { font-size: 11px; color: var(--text-secondary); }
-    .arch-arrow { font-size: 18px; color: var(--text-tertiary); text-align: center; }
+    .arch-box:hover { border-color: var(--accent); }
+    .arch-box.highlight {
+      border-color: var(--accent); border-width: 1.5px;
+      box-shadow: 0 0 20px var(--glow);
+    }
+    .arch-icon {
+      font-size: 24px; margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+    .arch-box.highlight .arch-icon { color: var(--accent); }
+    .arch-box-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .arch-box.highlight .arch-box-title { color: var(--accent); }
+    .arch-box-sub { font-size: 11px; color: var(--text-muted); }
+    .arch-arrow { font-size: 20px; color: var(--accent); text-align: center; opacity: 0.6; }
 
     .arch-layers {
       margin-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 10px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;
     }
-    @media (max-width: 500px) {
-      .arch-layers { grid-template-columns: 1fr 1fr; }
-    }
+    @media (max-width: 500px) { .arch-layers { grid-template-columns: 1fr 1fr; } }
 
     .layer-card {
-      border-radius: var(--radius-md); padding: 14px;
-      border: 0.5px solid var(--border);
+      background: var(--bg-card);
+      border-radius: 10px; padding: 14px;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
     }
-    .layer-card.ml   { border-left: 3px solid var(--green); }
-    .layer-card.sur  { border-left: 3px solid var(--blue); }
-    .layer-card.zeek { border-left: 3px solid var(--purple); }
-    .layer-card.rules{ border-left: 3px solid var(--amber); }
-    .layer-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
-    .layer-desc { font-size: 11px; color: var(--text-secondary); }
+    .layer-card:hover { transform: translateY(-2px); }
+    .layer-card.ml    { border-left: 3px solid var(--accent); }
+    .layer-card.sur   { border-left: 3px solid #4FC3F7; }
+    .layer-card.zeek  { border-left: 3px solid var(--gold); }
+    .layer-card.rules { border-left: 3px solid #7c6af5; }
+    .layer-card:hover.ml   { border-color: var(--accent); }
+    .layer-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary); }
+    .layer-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
 
     /* ── RESULTS ── */
     .results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;
     }
-    @media (max-width: 500px) {
-      .results-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 500px) { .results-grid { grid-template-columns: 1fr; } }
     .result-card {
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
     }
-    .result-icon { font-size: 22px; margin-bottom: 10px; color: var(--green); }
-    .result-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+    .result-card:hover {
+      border-color: var(--accent); transform: translateY(-3px);
+      box-shadow: 0 8px 30px var(--glow);
+    }
+    .result-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--accent-light);
+      border: 1px solid var(--border-strong);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: var(--accent); margin-bottom: 14px;
+    }
+    .result-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
     .result-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
 
     /* ── TECH STACK ── */
     .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 10px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px;
     }
-    @media (max-width: 500px) {
-      .tech-grid { grid-template-columns: repeat(3, 1fr); }
-    }
+    @media (max-width: 500px) { .tech-grid { grid-template-columns: repeat(3, 1fr); } }
     .tech-card {
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-md); padding: 16px 10px; text-align: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 10px; text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
     }
-    .tech-icon { font-size: 22px; color: var(--text-secondary); margin-bottom: 8px; }
-    .tech-name { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
-    .tech-role { font-size: 11px; color: var(--text-secondary); }
+    .tech-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .tech-icon { font-size: 26px; color: var(--accent2); margin-bottom: 10px; }
+    .tech-name { font-size: 12px; font-weight: 600; margin-bottom: 2px; color: var(--text-primary); }
+    .tech-role { font-size: 11px; color: var(--text-muted); }
 
     /* ── TEAM ── */
     .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 12px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 14px;
     }
-    @media (max-width: 500px) {
-      .team-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media (max-width: 500px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
     .team-card {
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 20px 14px; text-align: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 22px 14px; text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
     }
+    .team-card:hover { border-color: var(--accent); transform: translateY(-3px); }
     .avatar {
-      width: 46px; height: 46px; border-radius: 50%;
+      width: 52px; height: 52px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 500; margin: 0 auto 12px;
+      font-size: 16px; font-weight: 700; margin: 0 auto 14px;
+      border: 2px solid var(--border-strong);
     }
-    .av-green  { background: var(--green-light);  color: var(--green-dark); }
-    .av-blue   { background: var(--blue-light);   color: var(--blue-dark); }
-    .av-purple { background: var(--purple-light); color: var(--purple-dark); }
-    .av-amber  { background: var(--amber-light);  color: var(--amber-dark); }
-    .av-teal   { background: var(--green-light);  color: var(--green-deep); }
-    .team-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
-    .team-id   { font-size: 11px; color: var(--text-tertiary); margin-bottom: 6px; }
+    .av-1 { background: linear-gradient(135deg,#0077A8,#00B4D8); color:#fff; }
+    .av-2 { background: linear-gradient(135deg,#1565C0,#4FC3F7); color:#fff; }
+    .av-3 { background: linear-gradient(135deg,#5c35cc,#9b7ef8); color:#fff; }
+    .av-4 { background: linear-gradient(135deg,#0d7a5f,#1DB990); color:#fff; }
+    .av-5 { background: linear-gradient(135deg,#b85c00,#F4A223); color:#fff; }
+    .team-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .team-id { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
     .team-role-badge {
       display: inline-block; font-size: 11px; padding: 3px 10px;
-      border-radius: 99px; background: var(--bg-secondary);
-      color: var(--text-secondary); border: 0.5px solid var(--border);
+      border-radius: 99px; font-weight: 500;
+      background: var(--accent-light); color: var(--accent);
+      border: 1px solid var(--border-strong);
     }
     .team-email {
       margin-top: 10px;
       display: flex; align-items: center; justify-content: center; gap: 4px;
-      font-size: 11px; color: var(--green-dark); text-decoration: none;
-      word-break: break-all;
+      font-size: 10px; color: var(--accent); text-decoration: none; word-break: break-all;
     }
     .team-email:hover { text-decoration: underline; }
 
     /* ── DIVIDER ── */
-    .divider { height: 0.5px; background: var(--border); max-width: 900px; margin: 0 auto; }
+    .divider { height: 1px; background: var(--border); max-width: 960px; margin: 0 auto; }
 
     /* ── FOOTER ── */
     .footer {
       background: var(--bg-primary);
-      border-top: 0.5px solid var(--border);
-      padding: 28px 24px; text-align: center;
+      border-top: 1px solid var(--border);
+      padding: 32px 24px; text-align: center;
     }
-    .footer-text { font-size: 13px; color: var(--text-secondary); }
-    .footer-text span { color: var(--green); }
+    .footer-text { font-size: 13px; color: var(--text-muted); }
+    .footer-text span { color: var(--accent); font-weight: 600; }
+    .footer-line {
+      width: 40px; height: 2px; background: var(--accent);
+      margin: 0 auto 16px; border-radius: 1px;
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .fade-in {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
@@ -350,30 +416,39 @@
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-logo">
-    <div class="logo-dot"></div>
+    <div class="logo-icon"><i class="ti ti-shield-bolt"></i></div>
     AI Cybersecurity Lab
   </div>
-  <button class="nav-toggle" aria-label="Toggle menu" onclick="this.nextElementSibling.classList.toggle('open')">
-    <i class="ti ti-menu-2"></i>
-  </button>
-  <div class="nav-links">
-    <a href="#architecture" onclick="this.closest('.nav-links').classList.remove('open')">Architecture</a>
-    <a href="#results"      onclick="this.closest('.nav-links').classList.remove('open')">Results</a>
-    <a href="#tech"         onclick="this.closest('.nav-links').classList.remove('open')">Tech Stack</a>
-    <a href="#team"         onclick="this.closest('.nav-links').classList.remove('open')">Team</a>
+  <div class="nav-right">
+    <div class="nav-links" id="navLinks">
+      <a href="#architecture" onclick="closeNav()">Architecture</a>
+      <a href="#results"      onclick="closeNav()">Results</a>
+      <a href="#tech"         onclick="closeNav()">Tech Stack</a>
+      <a href="#team"         onclick="closeNav()">Team</a>
+    </div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <i class="ti ti-sun" id="themeIcon"></i>
+    </button>
+    <button class="nav-toggle" aria-label="Menu" onclick="toggleNav()">
+      <i class="ti ti-menu-2"></i>
+    </button>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <h1>AI-Powered<br><span>Cybersecurity Lab</span></h1>
+  <div class="hero-badge"><span class="badge-dot"></span>Graduation Project · CS 27 · 2025–2026</div>
+  <h1>
+    <span class="line1">AI-Powered</span><br>
+    <span class="line2">Cybersecurity Lab</span>
+  </h1>
   <p class="hero-sub">
     An integrated multi-layer network defense system using machine learning, intrusion detection,
     and automated firewall mitigation — validated across 240 live attack trials with 100% detection rate.
   </p>
   <div class="hero-cta">
     <button class="btn-primary" onclick="document.getElementById('architecture').scrollIntoView({behavior:'smooth'})">
-      <i class="ti ti-shield"></i> Explore System
+      <i class="ti ti-shield-bolt"></i> Explore System
     </button>
     <button class="btn-secondary" onclick="document.getElementById('results').scrollIntoView({behavior:'smooth'})">
       <i class="ti ti-chart-bar"></i> View Results
@@ -384,12 +459,12 @@
 <!-- METRICS -->
 <div class="metrics">
   <div class="metrics-inner">
-    <div class="metric-card"><span class="metric-val">98.94%</span><span class="metric-label">XGBoost accuracy on 16,000-sample test set</span></div>
-    <div class="metric-card"><span class="metric-val">872 ms</span><span class="metric-label">Mean time to mitigation across all trials</span></div>
-    <div class="metric-card"><span class="metric-val">240/240</span><span class="metric-label">Live attack trials — 100% detection rate</span></div>
-    <div class="metric-card"><span class="metric-val">80,000</span><span class="metric-label">Custom labeled dataset samples from live network</span></div>
-    <div class="metric-card"><span class="metric-val">4 Layers</span><span class="metric-label">XGBoost + Suricata + Zeek + Heuristics</span></div>
-    <div class="metric-card"><span class="metric-val">8 Classes</span><span class="metric-label">Attack categories covered end-to-end</span></div>
+    <div class="metric-card fade-in"><span class="metric-val">98.94%</span><span class="metric-label">XGBoost accuracy on 16,000-sample test set</span></div>
+    <div class="metric-card fade-in"><span class="metric-val">872 ms</span><span class="metric-label">Mean time to mitigation across all trials</span></div>
+    <div class="metric-card fade-in"><span class="metric-val">240/240</span><span class="metric-label">Live attack trials — 100% detection rate</span></div>
+    <div class="metric-card fade-in"><span class="metric-val">80,000</span><span class="metric-label">Custom labeled samples from live network</span></div>
+    <div class="metric-card fade-in"><span class="metric-val">4 Layers</span><span class="metric-label">XGBoost + Suricata + Zeek + Heuristics</span></div>
+    <div class="metric-card fade-in"><span class="metric-val">8 Classes</span><span class="metric-label">Attack categories covered end-to-end</span></div>
   </div>
 </div>
 
@@ -397,12 +472,9 @@
 <div id="architecture" class="section">
   <p class="section-label">Architecture</p>
   <h2 class="section-title">Multi-layer network defense</h2>
-  <p class="section-sub">
-    Four detection engines run concurrently under a Python orchestration engine.
-    On Tier-3 confirmation, the system autonomously blocks the attacker via SSH-driven pfSense firewall rules.
-  </p>
-  <div class="arch-wrapper">
-    <div class="arch-grid">
+  <p class="section-sub">Four detection engines run concurrently under a Python orchestration engine. On Tier-3 confirmation, the system autonomously blocks attackers via SSH-driven pfSense firewall rules.</p>
+  <div class="arch-wrapper fade-in">
+    <div class="arch-flow">
       <div class="arch-box">
         <div class="arch-icon"><i class="ti ti-skull"></i></div>
         <div class="arch-box-title">Kali Linux</div>
@@ -417,7 +489,7 @@
       <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
       <div class="arch-box highlight">
         <div class="arch-icon"><i class="ti ti-cpu"></i></div>
-        <div class="arch-box-title green">Ubuntu AI Server</div>
+        <div class="arch-box-title">Ubuntu AI Server</div>
         <div class="arch-box-sub">Defense engine · 192.168.150.10</div>
       </div>
       <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
@@ -451,43 +523,40 @@
 <div class="divider"></div>
 
 <!-- RESULTS -->
-<div class="section-on-white">
+<div class="section-on-bg">
   <div id="results" class="section-inner">
     <p class="section-label">Results</p>
     <h2 class="section-title">Key findings</h2>
-    <p class="section-sub">
-      Validated through 240 independent live-attack trials — the first live-validated closed-loop
-      hybrid IDS with ML-integrated automated firewall mitigation in the reviewed literature.
-    </p>
+    <p class="section-sub">Validated through 240 independent live-attack trials — the first live-validated closed-loop hybrid IDS with ML-integrated automated firewall mitigation in the reviewed literature.</p>
     <div class="results-grid">
-      <div class="result-card">
+      <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-check"></i></div>
-        <div class="result-title">100% detection rate</div>
+        <div class="result-title">100% Detection Rate</div>
         <div class="result-desc">240 out of 240 attacks detected and mitigated across all 8 attack categories, 30 trials each.</div>
       </div>
-      <div class="result-card">
+      <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-clock"></i></div>
-        <div class="result-title">872 ms mean MTTM</div>
+        <div class="result-title">872 ms Mean MTTM</div>
         <div class="result-desc">Fastest: DDoS/SYN Flood at 743 ms. Slowest: DataExfil at 958 ms requiring full 120s analysis window.</div>
       </div>
-      <div class="result-card">
+      <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-brain"></i></div>
-        <div class="result-title">98.94% ML accuracy</div>
+        <div class="result-title">98.94% ML Accuracy</div>
         <div class="result-desc">Macro F1-score 0.9892 across 8 classes. Top feature: flow_packets_s. Lowest: WebAttack F1 = 0.9814.</div>
       </div>
-      <div class="result-card">
+      <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-database"></i></div>
-        <div class="result-title">Zero dataset shift</div>
-        <div class="result-desc">Training data generated from the exact same live GNS3/VMware environment — no benchmark generalization gap.</div>
+        <div class="result-title">Zero Dataset Shift</div>
+        <div class="result-desc">Training data from the exact same live GNS3/VMware environment — no benchmark generalization gap.</div>
       </div>
-      <div class="result-card">
+      <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-layers-subtract"></i></div>
-        <div class="result-title">Full 8/8 coverage</div>
+        <div class="result-title">Full 8/8 Coverage</div>
         <div class="result-desc">Suricata alone: 6/8. Zeek alone: 4/8. ML alone: 8/8. Combined with layered confirmation: 8/8.</div>
       </div>
-      <div class="result-card">
+      <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-lock"></i></div>
-        <div class="result-title">Sub-5ms firewall block</div>
+        <div class="result-title">Sub-5ms Firewall Block</div>
         <div class="result-desc">SSH-driven pfctl injection into pfSense EasyRuleBlockHostsWAN executes in under 5 ms post-command.</div>
       </div>
     </div>
@@ -496,62 +565,62 @@
 
 <!-- TECH STACK -->
 <div id="tech" class="section">
-  <p class="section-label">Technology stack</p>
+  <p class="section-label">Technology Stack</p>
   <h2 class="section-title">Open-source tools, enterprise-grade results</h2>
   <p class="section-sub">Every component is freely deployable — no proprietary licensing required.</p>
   <div class="tech-grid">
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-chart-dots"></i></div><div class="tech-name">XGBoost 2.0.3</div><div class="tech-role">ML classifier</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-eye"></i></div><div class="tech-name">Suricata 8.0.3</div><div class="tech-role">Signature IDS</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-activity"></i></div><div class="tech-name">Zeek 8.1.1</div><div class="tech-role">Network monitor</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-wall"></i></div><div class="tech-name">pfSense 2.7.2</div><div class="tech-role">Firewall / NAT</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-topology-star"></i></div><div class="tech-name">GNS3</div><div class="tech-role">Network simulator</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-server"></i></div><div class="tech-name">VMware 16 Pro</div><div class="tech-role">Hypervisor</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-brand-python"></i></div><div class="tech-name">Python 3.10</div><div class="tech-role">Orchestration</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-antenna"></i></div><div class="tech-name">Scapy v2.5.0</div><div class="tech-role">Packet capture</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-skull"></i></div><div class="tech-name">Kali 2025.2</div><div class="tech-role">Adversary node</div></div>
-    <div class="tech-card"><div class="tech-icon"><i class="ti ti-device-laptop"></i></div><div class="tech-name">Ubuntu 24.04</div><div class="tech-role">AI server OS</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-chart-dots"></i></div><div class="tech-name">XGBoost 2.0.3</div><div class="tech-role">ML classifier</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-eye"></i></div><div class="tech-name">Suricata 8.0.3</div><div class="tech-role">Signature IDS</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-activity"></i></div><div class="tech-name">Zeek 8.1.1</div><div class="tech-role">Network monitor</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-wall"></i></div><div class="tech-name">pfSense 2.7.2</div><div class="tech-role">Firewall / NAT</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-topology-star"></i></div><div class="tech-name">GNS3</div><div class="tech-role">Network simulator</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-server"></i></div><div class="tech-name">VMware 16 Pro</div><div class="tech-role">Hypervisor</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-brand-python"></i></div><div class="tech-name">Python 3.10</div><div class="tech-role">Orchestration</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-antenna"></i></div><div class="tech-name">Scapy v2.5.0</div><div class="tech-role">Packet capture</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-skull"></i></div><div class="tech-name">Kali 2025.2</div><div class="tech-role">Adversary node</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><i class="ti ti-device-laptop"></i></div><div class="tech-name">Ubuntu 24.04</div><div class="tech-role">AI server OS</div></div>
   </div>
 </div>
 
 <div class="divider"></div>
 
 <!-- TEAM -->
-<div class="section-on-white">
+<div class="section-on-bg">
   <div id="team" class="section-inner">
     <p class="section-label">Team</p>
     <h2 class="section-title">Meet the team</h2>
     <p class="section-sub">Five members across cybersecurity operations, AI & machine learning, and network engineering.</p>
     <div class="team-grid">
-      <div class="team-card">
-        <div class="avatar av-green">AH</div>
+      <div class="team-card fade-in">
+        <div class="avatar av-1">AH</div>
         <div class="team-name">Ahmed Mostafa Hussein</div>
         <div class="team-id">12300078</div>
         <div class="team-role-badge">Cybersecurity Lead</div>
         <a href="mailto:a7medmostafa7777@gmail.com" class="team-email">
-          <i class="ti ti-mail" style="font-size:13px;flex-shrink:0"></i>
+          <i class="ti ti-mail" style="flex-shrink:0;font-size:12px"></i>
           a7medmostafa7777@gmail.com
         </a>
       </div>
-      <div class="team-card">
-        <div class="avatar av-blue">HE</div>
+      <div class="team-card fade-in">
+        <div class="avatar av-2">HE</div>
         <div class="team-name">Hassan Ehab Ahmed</div>
         <div class="team-id">12300301</div>
         <div class="team-role-badge">AI &amp; ML</div>
       </div>
-      <div class="team-card">
-        <div class="avatar av-purple">YG</div>
+      <div class="team-card fade-in">
+        <div class="avatar av-3">YG</div>
         <div class="team-name">Youssef Gamal Ghoneim</div>
         <div class="team-id">12300264</div>
         <div class="team-role-badge">Network Eng.</div>
       </div>
-      <div class="team-card">
-        <div class="avatar av-amber">KM</div>
+      <div class="team-card fade-in">
+        <div class="avatar av-4">KM</div>
         <div class="team-name">Khaled Mohamed Ahmed</div>
         <div class="team-id">12300085</div>
         <div class="team-role-badge">Network Eng.</div>
       </div>
-      <div class="team-card">
-        <div class="avatar av-teal">AA</div>
+      <div class="team-card fade-in">
+        <div class="avatar av-5">AA</div>
         <div class="team-name">Abdallah Saleh Abdallah</div>
         <div class="team-id">12300523</div>
         <div class="team-role-badge">Network Eng.</div>
@@ -562,8 +631,42 @@
 
 <!-- FOOTER -->
 <div class="footer">
+  <div class="footer-line"></div>
   <p class="footer-text">AI-Powered Cybersecurity Lab — <span>CS 27</span> — Modern Academy in Maadi — 2025–2026</p>
 </div>
 
+<script>
+  // ── THEME TOGGLE ──
+  const root = document.documentElement;
+  const icon = document.getElementById('themeIcon');
+
+  function toggleTheme() {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    icon.className = isDark ? 'ti ti-moon' : 'ti ti-sun';
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  }
+
+  // restore saved preference
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    root.setAttribute('data-theme', saved);
+    icon.className = saved === 'dark' ? 'ti ti-sun' : 'ti ti-moon';
+  }
+
+  // ── NAV TOGGLE ──
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('navLinks').classList.remove('open');
+  }
+
+  // ── SCROLL FADE-IN ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
