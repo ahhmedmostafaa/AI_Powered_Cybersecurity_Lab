@@ -1,0 +1,64 @@
+# ==============================
+# AI-Powered Cybersecurity Lab
+# .gitignore
+# ==============================
+
+# ── Datasets (too large / sensitive) ──
+*.csv
+training_data.csv
+dataset/
+
+# ── Trained model files (large binaries) ──
+*.pkl
+*.joblib
+/opt/ai-defense/
+
+# ── Cisco / VM images (copyright + size) ──
+*.bin
+*.image
+*.vmdk
+*.ova
+*.iso
+
+# ── Secrets & credentials ──
+*.env
+.env
+secrets.txt
+passwords.txt
+data.bin
+
+# ── Python cache ──
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Virtual environments ──
+venv/
+env/
+.venv/
+
+# ── Logs ──
+*.log
+logs/
+/var/log/
+
+# ── OS files ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE files ──
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ── Jupyter ──
+.ipynb_checkpoints/
+*.ipynb

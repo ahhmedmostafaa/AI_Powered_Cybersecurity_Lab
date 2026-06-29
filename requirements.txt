@@ -1,0 +1,24 @@
+# AI-Powered Cybersecurity Lab — Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core ML
+xgboost==2.0.3
+scikit-learn==1.3.2
+numpy>=1.24
+pandas>=2.0
+
+# Network capture
+scapy==2.5.0
+
+# Visualization
+matplotlib>=3.7
+seaborn>=0.12
+
+# Model persistence
+joblib>=1.3
+
+# SSH automation (for pfSense blocking)
+paramiko>=3.0
+
+# Utilities
+python-dateutil>=2.8
