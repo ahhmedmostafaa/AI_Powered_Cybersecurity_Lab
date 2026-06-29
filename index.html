@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI-Powered Cybersecurity Lab — CS 27</title>
+  <title>AI-Powered Cybersecurity Lab — Ahmed Mostafa Hussein</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -175,6 +175,15 @@
       transition: background 0.2s, transform 0.2s;
     }
     .btn-secondary:hover { background: var(--accent-light); transform: translateY(-3px); }
+    .btn-github {
+      background: transparent; color: var(--text-secondary);
+      border: 2px solid var(--border-strong); border-radius: 12px;
+      padding: 14px 30px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: inherit; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px; min-height: 50px;
+      transition: background 0.2s, transform 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .btn-github:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
     .hero-stats {
       position: relative; display: flex; justify-content: center; gap: 40px;
       margin-top: 52px; flex-wrap: wrap;
@@ -188,7 +197,7 @@
       .hero h1 { font-size: 36px; letter-spacing: -0.5px; }
       .hero-sub { font-size: 15px; }
       .hero-cta { flex-direction: column; align-items: center; }
-      .btn-primary,.btn-secondary { width: 100%; max-width: 320px; justify-content: center; }
+      .btn-primary,.btn-secondary,.btn-github { width: 100%; max-width: 320px; justify-content: center; }
       .hstat-sep { display: none; }
       .hero-stats { gap: 24px; }
     }
@@ -317,51 +326,39 @@
     .tech-name { font-size: 12px; font-weight: 700; margin-bottom: 3px; color: var(--text-primary); position: relative; }
     .tech-role { font-size: 11px; color: var(--text-muted); position: relative; }
 
-    /* ═══════════════ TEAM ═══════════════ */
-    .team-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(158px,1fr)); gap: 16px; }
-    @media (max-width:500px) { .team-grid{grid-template-columns:repeat(2,1fr)} }
-    .team-card {
+    /* ═══════════════ ABOUT ═══════════════ */
+    .about-card {
       background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 18px; padding: 26px 16px; text-align: center;
-      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; position: relative; overflow: hidden;
+      border-radius: 20px; padding: 36px; display: flex; gap: 28px; align-items: flex-start;
+      transition: border-color 0.25s, box-shadow 0.25s;
     }
-    .team-card::before {
-      content:''; position:absolute; top:0; left:0; right:0; height:3px;
-      background: linear-gradient(90deg, var(--accent), var(--purple));
-      opacity:0; transition: opacity 0.25s;
-    }
-    .team-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 36px var(--glow); }
-    .team-card:hover::before { opacity: 1; }
-    .avatar {
-      width: 56px; height: 56px; border-radius: 50%;
+    .about-card:hover { border-color: var(--accent); box-shadow: 0 8px 32px var(--glow); }
+    .about-avatar {
+      width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, #0077A8, #00B4D8);
       display: flex; align-items: center; justify-content: center;
-      font-size: 17px; font-weight: 800; margin: 0 auto 16px;
+      font-size: 24px; font-weight: 800; color: #fff;
       border: 2px solid var(--border-strong);
+      box-shadow: 0 4px 20px var(--glow);
     }
-    .av-1 { background: linear-gradient(135deg,#0077A8,#00B4D8); color:#fff; }
-    .av-2 { background: linear-gradient(135deg,#1565C0,#4FC3F7); color:#fff; }
-    .av-3 { background: linear-gradient(135deg,#5c35cc,#9b7ef8); color:#fff; }
-    .av-4 { background: linear-gradient(135deg,#0d7a5f,#1DB990); color:#fff; }
-    .av-5 { background: linear-gradient(135deg,#b06000,#F4A223); color:#fff; }
-    .team-name { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-    .team-id { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; }
-    .team-role-badge {
-      display: inline-block; font-size: 11px; padding: 4px 12px;
-      border-radius: 99px; font-weight: 600;
-      background: var(--accent-light); color: var(--accent);
+    .about-info { flex: 1; }
+    .about-name { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .about-tagline { font-size: 14px; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
+    .about-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 20px; }
+    .about-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .about-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 600; padding: 9px 16px;
+      border-radius: 10px; text-decoration: none;
       border: 1px solid var(--border-strong);
+      color: var(--text-secondary); background: var(--bg-secondary);
+      transition: all 0.2s;
     }
-    /* ── FIX: email icon same line ── */
-    .team-email {
-      margin-top: 12px;
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 5px; font-size: 11px; color: var(--accent);
-      text-decoration: none; white-space: nowrap; overflow: hidden;
-      text-overflow: ellipsis; max-width: 100%;
+    .about-link:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-light); transform: translateY(-2px); }
+    @media (max-width: 560px) {
+      .about-card { flex-direction: column; align-items: center; text-align: center; padding: 28px 20px; }
+      .about-links { justify-content: center; }
     }
-    .team-email i { font-size: 13px; flex-shrink: 0; }
-    .team-email span { overflow: hidden; text-overflow: ellipsis; }
-    .team-email:hover { text-decoration: underline; }
 
     /* ═══════════════ DIVIDER ═══════════════ */
     .divider { height: 1px; background: var(--border); max-width: 1000px; margin: 0 auto; }
@@ -393,7 +390,7 @@
       <a href="#architecture" onclick="closeNav()">Architecture</a>
       <a href="#results"      onclick="closeNav()">Results</a>
       <a href="#tech"         onclick="closeNav()">Tech Stack</a>
-      <a href="#team"         onclick="closeNav()">Team</a>
+      <a href="#about"        onclick="closeNav()">About</a>
     </div>
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">
       <i class="ti ti-sun" id="themeIcon"></i>
@@ -408,7 +405,7 @@
 <div class="hero">
   <div class="hero-bg-grid"></div>
   <div class="hero-glow"></div>
-  <div class="hero-badge"><span class="badge-pulse"></span>Graduation Project · CS 27 · 2025–2026</div>
+  <div class="hero-badge"><span class="badge-pulse"></span>Cybersecurity Research Project · 2025</div>
   <h1>
     <span class="line1">AI-Powered</span>
     <span class="line2">Cybersecurity Lab</span>
@@ -421,6 +418,9 @@
     <button class="btn-secondary" onclick="document.getElementById('results').scrollIntoView({behavior:'smooth'})">
       <i class="ti ti-chart-bar"></i> View Results
     </button>
+    <a class="btn-github" href="https://github.com/ahhmedmostafaa/AI_Powered_Cybersecurity_Lab" target="_blank" rel="noopener">
+      <i class="ti ti-brand-github"></i> GitHub
+    </a>
   </div>
   <div class="hero-stats">
     <div class="hstat"><span class="hstat-val">98.94%</span><span class="hstat-label">ML Accuracy</span></div>
@@ -504,7 +504,7 @@
   <div id="results" class="section-inner">
     <p class="section-label">Results</p>
     <h2 class="section-title">Key findings</h2>
-    <p class="section-sub">Validated through 240 independent live-attack trials — the first live-validated closed-loop hybrid IDS with ML-integrated automated firewall mitigation in the reviewed literature.</p>
+    <p class="section-sub">Validated through 240 independent live-attack trials — a live-validated closed-loop hybrid IDS with ML-integrated automated firewall mitigation.</p>
     <div class="results-grid">
       <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-check"></i></div>
@@ -524,7 +524,7 @@
       <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-database"></i></div>
         <div class="result-title">Zero Dataset Shift</div>
-        <div class="result-desc">Training data from the exact live GNS3/VMware environment — no benchmark generalization gap.</div>
+        <div class="result-desc">Training data captured from the exact live GNS3/VMware environment — no benchmark generalization gap.</div>
       </div>
       <div class="result-card fade-in">
         <div class="result-icon"><i class="ti ti-layers-subtract"></i></div>
@@ -561,54 +561,32 @@
 
 <div class="divider"></div>
 
-<!-- TEAM -->
+<!-- ABOUT -->
 <div class="section-on-bg">
-  <div id="team" class="section-inner">
-    <p class="section-label">Team</p>
-    <h2 class="section-title">Meet the team</h2>
-    <p class="section-sub">Five members across cybersecurity operations, AI & machine learning, and network engineering.</p>
-    <div class="team-grid">
-
-      <div class="team-card fade-in">
-        <div class="avatar av-1">AH</div>
-        <div class="team-name">Ahmed Mostafa Hussein</div>
-        <div class="team-id">12300078</div>
-        <div class="team-role-badge">Cybersecurity Lead</div>
-        <a href="mailto:a7medmostafa7777@gmail.com" class="team-email">
-          <i class="ti ti-mail"></i>
-          <span>a7medmostafa7777@gmail.com</span>
-        </a>
+  <div id="about" class="section-inner">
+    <p class="section-label">About</p>
+    <h2 class="section-title">Built by</h2>
+    <p class="section-sub">Designed, implemented, and validated end-to-end — from GNS3 topology construction to live Kali Linux adversarial validation.</p>
+    <div class="about-card fade-in">
+      <div class="about-avatar">AH</div>
+      <div class="about-info">
+        <div class="about-name">Ahmed Mostafa Hussein</div>
+        <div class="about-tagline">Cybersecurity Engineer &amp; ML Developer</div>
+        <div class="about-desc">
+          Built this system entirely from scratch — network topology design in GNS3, live dataset collection with Scapy (80,000 samples over 24 hours), XGBoost model training, Suricata/Zeek integration, and live adversarial validation across 240 independent trials. The result: a fully automated, sub-second threat mitigation system with zero human intervention.
+        </div>
+        <div class="about-links">
+          <a class="about-link" href="https://github.com/ahhmedmostafaa/AI_Powered_Cybersecurity_Lab" target="_blank" rel="noopener">
+            <i class="ti ti-brand-github"></i> GitHub Repo
+          </a>
+          <a class="about-link" href="https://www.linkedin.com/in/ahmedmostafahussein" target="_blank" rel="noopener">
+            <i class="ti ti-brand-linkedin"></i> LinkedIn
+          </a>
+          <a class="about-link" href="mailto:a7medmostafa7777@gmail.com">
+            <i class="ti ti-mail"></i> Email
+          </a>
+        </div>
       </div>
-
-      <div class="team-card fade-in">
-        <div class="avatar av-2">HA</div>
-        <div class="team-name">Hassan Ehab Ahmed</div>
-        <div class="team-id">12300301</div>
-        <div class="team-role-badge">AI &amp; ML</div>
-      </div>
-
-      <div class="team-card fade-in">
-        <div class="avatar av-3">YG</div>
-        <div class="team-name">Youssef Gamal Ghoneim</div>
-        <div class="team-id">12300264</div>
-        <div class="team-role-badge">Network Eng.</div>
-      </div>
-
-      <div class="team-card fade-in">
-        <div class="avatar av-4">KA</div>
-        <div class="team-name">Khaled Mohamed Ahmed</div>
-        <div class="team-id">12300085</div>
-        <div class="team-role-badge">Network Eng.</div>
-      </div>
-
-      <!-- AA → AS fixed -->
-      <div class="team-card fade-in">
-        <div class="avatar av-5">AA</div>
-        <div class="team-name">Abdallah Saleh Abdallah</div>
-        <div class="team-id">12300523</div>
-        <div class="team-role-badge">Network Eng.</div>
-      </div>
-
     </div>
   </div>
 </div>
@@ -616,7 +594,7 @@
 <!-- FOOTER -->
 <div class="footer">
   <div class="footer-line"></div>
-  <p class="footer-text">AI-Powered Cybersecurity Lab — <span>CS 27</span> — Modern Academy in Maadi — 2025–2026</p>
+  <p class="footer-text">AI-Powered Cybersecurity Lab — Built by <span>Ahmed Mostafa Hussein</span> — 2025</p>
 </div>
 
 <script>
