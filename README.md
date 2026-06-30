@@ -97,7 +97,7 @@ This system resolves all three simultaneously.
 ## 🗂️ Repository Structure
 
 ```
-AI-Cybersecurity-Lab/
+AI-Powered_Cybersecurity-Lab/
 │
 ├── scripts/
 │   ├── script0_attack_generator.py       # Automated Threat Orchestration Engine (Kali side)
