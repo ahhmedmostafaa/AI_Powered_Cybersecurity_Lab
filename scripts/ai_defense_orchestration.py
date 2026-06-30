@@ -51,12 +51,12 @@ class Colors:
 
 
 class Config:
-    # Network
-    PFSENSE_IP      = "192.168.180.129"
-    PFSENSE_USER    = "admin"
-    PFSENSE_PASS    = "123"
-    PFSENSE_WAN_IF  = "em0"
-    LOCAL_IF        = "ens33"
+    # Network — set these via environment variables, never hardcode credentials
+    PFSENSE_IP      = os.environ.get("PFSENSE_IP", "")
+    PFSENSE_USER    = os.environ.get("PFSENSE_USER", "")
+    PFSENSE_PASS    = os.environ.get("PFSENSE_PASS", "")
+    PFSENSE_WAN_IF  = os.environ.get("PFSENSE_WAN_IF", "em0")
+    LOCAL_IF        = os.environ.get("LOCAL_IF", "ens33")
 
     # Paths
     MODEL_DIR           = Path("/opt/ai-defense/models")
@@ -87,11 +87,11 @@ class Config:
     FW_SYNC_INTERVAL        = 10
     GRACE_PERIOD_SECONDS    = 15
 
-    # Whitelists
+    # Whitelists — example values; replace with your actual trusted IPs/subnets
     WHITELIST_IPS      = {"192.168.180.128", "192.168.180.129", "192.168.180.2",
-                          "192.168.180.1", "91.80.48.91", "10.11.220.106", "10.11.220.49"}
+                          "192.168.180.1"}
     WHITELIST_PREFIXES = ["192.168.150.", "127.", "8.8.", "1.1.", "1.0.",
-                          "192.168.50.", "192.168.101.", "10.11.220."]
+                          "192.168.50.", "192.168.101."]
     LEGITIMATE_PORTS   = {53, 67, 68, 123, 137, 138, 161, 162, 1900, 5353, 5355}
 
     PROTECTED_NETWORKS = {
