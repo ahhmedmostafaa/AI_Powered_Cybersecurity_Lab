@@ -1,5 +1,7 @@
 # 🛡️ AI-Powered Cybersecurity Lab
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21083517.svg)](https://doi.org/10.5281/zenodo.21083517)
+
 **An Integrated Multi-Layer Network Defense System using Machine Learning, Intrusion Detection, and Automated Firewall Mitigation**
 
 > **Author:** Ahmed Mostafa Hussein  
