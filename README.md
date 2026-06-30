@@ -111,7 +111,7 @@ AI-Powered_Cybersecurity-Lab/
 ├── results/
 │   └── performance_metrics.md            # All results: accuracy, MTTM, per-class metrics
 │
-├── docs/                                 # Research paper / documentation
+├── docs/                                 # Research paper
 │
 ├── requirements.txt
 ├── .gitignore
