@@ -5,6 +5,7 @@
 > **Author:** Ahmed Mostafa Hussein  
 > **GitHub:** [ahhmedmostafaa](https://github.com/ahhmedmostafaa)
 
+<br>
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21083517.svg)](https://doi.org/10.5281/zenodo.21083517)
 
@@ -151,8 +152,8 @@ This system resolves all three simultaneously.
 </td>
 <td width="50%">
 
-**pfSense — Automated Firewall Response**
-![pfSense Dashboard](images/07-firewall-pfsense/01-pfsense-dashboard.png)
+**pfSense — Blocked IPs Table**
+![Blocked IPs Table](images/07-firewall-pfsense/04-blocked-ips-table.png)
 
 </td>
 </tr>
@@ -191,6 +192,7 @@ AI-Powered_Cybersecurity-Lab/
 ├── docs/                                 # Research paper
 │
 ├── requirements.txt
+├── .env.example                          # Template for pfSense credentials — copy to .env
 ├── .gitignore
 └── README.md
 ```
