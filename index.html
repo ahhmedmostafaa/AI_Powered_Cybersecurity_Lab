@@ -306,6 +306,22 @@
     .result-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
     .result-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
 
+    /* ═══════════════ GALLERY / PROOF ═══════════════ */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 16px; }
+    @media (max-width:500px) { .gallery-grid{grid-template-columns:1fr} }
+    .gallery-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; position: relative;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .gallery-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 36px var(--glow); }
+    .gallery-img-wrap { width: 100%; aspect-ratio: 16/10; overflow: hidden; background: #0a0a12; }
+    .gallery-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .gallery-caption { padding: 16px 18px 18px; }
+    .gallery-caption-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 7px; }
+    .gallery-caption-title i { color: var(--accent); font-size: 15px; }
+    .gallery-caption-sub { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+
     /* ═══════════════ TECH ═══════════════ */
     .tech-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(110px,1fr)); gap: 12px; }
     @media (max-width:500px) { .tech-grid{grid-template-columns:repeat(3,1fr)} }
@@ -389,6 +405,7 @@
     <div class="nav-links" id="navLinks">
       <a href="#architecture" onclick="closeNav()">Architecture</a>
       <a href="#results"      onclick="closeNav()">Results</a>
+      <a href="#proof"        onclick="closeNav()">Gallery</a>
       <a href="#tech"         onclick="closeNav()">Tech Stack</a>
       <a href="#about"        onclick="closeNav()">About</a>
     </div>
@@ -535,6 +552,45 @@
         <div class="result-icon"><i class="ti ti-lock"></i></div>
         <div class="result-title">Sub-5ms Firewall Block</div>
         <div class="result-desc">SSH-driven pfctl injection into pfSense EasyRuleBlockHostsWAN executes in under 5 ms post-command.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- GALLERY / PROOF -->
+<div id="proof" class="section">
+  <p class="section-label">Gallery</p>
+  <h2 class="section-title">See it in action</h2>
+  <p class="section-sub">Real terminal output captured from the live lab — the defense engine detecting and blocking actual attack traffic in real time.</p>
+  <div class="gallery-grid">
+    <div class="gallery-card fade-in">
+      <div class="gallery-img-wrap"><img src="images/05-defense-system-startup/01-three-layer-defense-active.png" alt="3-layer defense system active" loading="lazy"></div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title"><i class="ti ti-shield-check"></i> 3-Layer Defense — Live</div>
+        <div class="gallery-caption-sub">XGBoost, Suricata, and Zeek all initialized and monitoring in real time.</div>
+      </div>
+    </div>
+    <div class="gallery-card fade-in">
+      <div class="gallery-img-wrap"><img src="images/05-defense-system-startup/02-final-session-summary.png" alt="Session summary — 100% detection rate" loading="lazy"></div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title"><i class="ti ti-chart-bar"></i> 100% Detection Rate</div>
+        <div class="gallery-caption-sub">End-of-session report: 11/11 live attacks detected and blocked across all layers.</div>
+      </div>
+    </div>
+    <div class="gallery-card fade-in">
+      <div class="gallery-img-wrap"><img src="images/06-attack-detection-response/12-botnet-detection.png" alt="Botnet attack detected and blocked" loading="lazy"></div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title"><i class="ti ti-robot"></i> Botnet — Detected & Blocked</div>
+        <div class="gallery-caption-sub">Metasploit Meterpreter beacon flagged by ML at 99% confidence, autonomously blocked.</div>
+      </div>
+    </div>
+    <div class="gallery-card fade-in">
+      <div class="gallery-img-wrap"><img src="images/04-model-training/06-confusion-matrix-feature-importance.png" alt="Confusion matrix and feature importance" loading="lazy"></div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title"><i class="ti ti-chart-histogram"></i> Model Validation</div>
+        <div class="gallery-caption-sub">Confusion matrix and top-15 feature importance from the XGBoost training run.</div>
       </div>
     </div>
   </div>
