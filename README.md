@@ -1,7 +1,5 @@
 # 🛡️ AI-Powered Cybersecurity Lab
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21083517.svg)](https://doi.org/10.5281/zenodo.21083517)
-
 **An Integrated Multi-Layer Network Defense System using Machine Learning, Intrusion Detection, and Automated Firewall Mitigation**
 
 > **Author:** Ahmed Mostafa Hussein  
@@ -96,6 +94,71 @@ This system resolves all three simultaneously.
 
 ---
 
+## 📸 Screenshots
+
+<table>
+<tr>
+<td width="50%">
+
+**Full Network Topology**
+![Network Topology](images/02-network-topology/01-full-network-topology.png)
+
+</td>
+<td width="50%">
+
+**Lab Environment — All VMs Running**
+![VMware VMs](images/01-lab-environment/01-vmware-workstation-vms.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**3-Layer Defense — Live & Active**
+![Defense active](images/05-defense-system-startup/01-three-layer-defense-active.png)
+
+</td>
+<td width="50%">
+
+**Session Summary — 100% Detection Rate**
+![Session summary](images/05-defense-system-startup/02-final-session-summary.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Model Performance — 98.94% Accuracy**
+![Performance metrics](images/04-model-training/05-performance-metrics.png)
+
+</td>
+<td width="50%">
+
+**Confusion Matrix & Feature Importance**
+![Confusion matrix](images/04-model-training/06-confusion-matrix-feature-importance.png)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**Botnet Attack — Detected & Blocked**
+![Botnet detection](images/06-attack-detection-response/12-botnet-detection.png)
+
+</td>
+<td width="50%">
+
+**pfSense — Automated Firewall Response**
+![pfSense Dashboard](images/07-firewall-pfsense/01-pfsense-dashboard.png)
+
+</td>
+</tr>
+</table>
+
+> 📁 More screenshots (full data collection & training pipeline, every attack type, firewall rules) are organized in [`images/`](images/).
+
+---
+
 ## 🗂️ Repository Structure
 
 ```
@@ -112,6 +175,15 @@ AI-Powered_Cybersecurity-Lab/
 │
 ├── results/
 │   └── performance_metrics.md            # All results: accuracy, MTTM, per-class metrics
+│
+├── images/                               # Screenshots (see Screenshots section above)
+│   ├── 01-lab-environment/
+│   ├── 02-network-topology/
+│   ├── 03-data-collection/
+│   ├── 04-model-training/
+│   ├── 05-defense-system-startup/
+│   ├── 06-attack-detection-response/
+│   └── 07-firewall-pfsense/
 │
 ├── docs/                                 # Research paper
 │
