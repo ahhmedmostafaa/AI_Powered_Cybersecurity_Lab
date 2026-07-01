@@ -5,6 +5,8 @@
 > **Author:** Ahmed Mostafa Hussein  
 > **GitHub:** [ahhmedmostafaa](https://github.com/ahhmedmostafaa)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21083517.svg)](https://doi.org/10.5281/zenodo.21083517)
+
 ---
 
 ## 🎯 Project Overview
