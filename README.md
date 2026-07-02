@@ -52,7 +52,8 @@ flowchart TB
         B["pfSense Firewall 2.7.2<br/>192.168.180.129<br/><i>EasyRuleBlockHostsWAN alias</i>"]
     end
 
-    subgraph DEFENSE["🛡️ DEFENSE ZONE — Ubuntu AI Server<br/>192.168.150.10"]
+    subgraph DEFENSE["🛡️ DEFENSE ZONE — Ubuntu AI Server (192.168.150.10)"]
+        direction TB
         C1["XGBoost ML<br/>98.94% acc"]
         C2["Suricata IDS<br/>ET Open rules"]
         C3["Zeek Monitor<br/>Protocol analysis"]
