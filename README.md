@@ -29,7 +29,7 @@
 - [📊 Dataset](#dataset)
 - [🛠️ Technology Stack](#technology-stack)
 - [📈 Model Performance](#model-performance)
-- [⚠️ Ethical Use Notice](#ethical-use-notice)
+- [⚠️ Ethical Use Notice & Disclaimer](#ethical-use-notice)
 - [📄 License](#license)
 - [📬 Contact](#contact)
 
@@ -366,14 +366,16 @@ See `results/performance_metrics.md` for full per-class breakdown and MTTM resul
 ---
 
 <a id="ethical-use-notice"></a>
-## ⚠️ Ethical Use Notice
+## ⚠️ Ethical Use Notice & Disclaimer
 
-This project was developed **strictly for cybersecurity research**.
+This project was developed **strictly for cybersecurity research and education**.
 
 - All attack simulations were conducted in an **isolated virtualized lab environment**
 - No real networks or systems were targeted
 - The attack scripts (`script0_attack_generator.py`) are provided for **research reproducibility only**
 - **Do not** use any part of this project against systems you do not own or have explicit permission to test
+
+**Disclaimer:** This software is provided "as is" for educational and research purposes only. The author assumes no liability and is not responsible for any misuse or damage caused by this software. Users are solely responsible for complying with applicable local, national, and international laws.
 
 ---
 
