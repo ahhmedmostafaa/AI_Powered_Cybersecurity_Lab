@@ -11,6 +11,30 @@
 
 ---
 
+## 📑 Table of Contents
+
+- [🎯 Project Overview](#-project-overview)
+  - [The Problem It Solves](#the-problem-it-solves)
+- [⚡ Key Results](#-key-results)
+- [🏗️ System Architecture](#-system-architecture)
+  - [Four Detection Layers](#four-detection-layers)
+  - [Three-Tier Confidence Escalation](#three-tier-confidence-escalation)
+- [📸 Screenshots](#-screenshots)
+- [🗂️ Repository Structure](#-repository-structure)
+- [🚀 Quick Start](#-quick-start)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Running the System](#running-the-system)
+- [📊 Dataset](#-dataset)
+- [🛠️ Technology Stack](#-technology-stack)
+- [📈 Model Performance](#-model-performance)
+- [⚠️ Ethical Use Notice](#-ethical-use-notice)
+- [📄 License](#-license)
+- [📬 Contact](#-contact)
+
+---
+
 ## 🎯 Project Overview
 
 A fully automated, multi-layer network defense system deployed inside a realistic virtualized enterprise network. The system achieves **100% detection rate** across 240 live attack trials with a **Mean Time To Mitigation (MTTM) of 872 ms** — with zero human intervention.
