@@ -42,43 +42,41 @@ This system resolves all three simultaneously.
 
 ## 🏗️ System Architecture
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    WAN ZONE                             │
-│              Kali Linux Adversary                       │
-│            192.168.180.130 / .131                       │
-└──────────────────────┬──────────────────────────────────┘
-                       │ Attack Traffic
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                 DMZ / EDGE                              │
-│           pfSense Firewall 2.7.2                        │
-│              192.168.180.129                            │
-│         [EasyRuleBlockHostsWAN alias]                   │
-└──────────────────────┬──────────────────────────────────┘
-                       │ Mirrored Traffic
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│              DEFENSE ZONE — Ubuntu AI Server            │
-│                  192.168.150.10                         │
-│                                                         │
-│  ┌─────────────┐  ┌─────────────┐  ┌────────────────┐  │
-│  │ XGBoost ML  │  │ Suricata IDS│  │  Zeek Monitor  │  │
-│  │  98.94% acc │  │ ET Open rules│  │ Protocol analysis│ │
-│  └──────┬──────┘  └──────┬──────┘  └───────┬────────┘  │
-│         │                │                  │            │
-│         └────────────────┼──────────────────┘            │
-│                          ▼                               │
-│              ┌─────────────────────┐                    │
-│              │  Orchestration      │                    │
-│              │  Engine (Python)    │                    │
-│              │  3-Tier Escalation  │                    │
-│              │  30s/180s Dedup     │                    │
-│              └──────────┬──────────┘                    │
-│                         │ SSH pfctl block                │
-└─────────────────────────┼───────────────────────────────┘
-                          ▼
-              pfSense firewall BLOCKED ✓
+```mermaid
+flowchart TB
+    subgraph WAN["🌐 WAN ZONE"]
+        A["Kali Linux Adversary<br/>192.168.180.130 / .131"]
+    end
+
+    subgraph DMZ["🧱 DMZ / EDGE"]
+        B["pfSense Firewall 2.7.2<br/>192.168.180.129<br/><i>EasyRuleBlockHostsWAN alias</i>"]
+    end
+
+    subgraph DEFENSE["🛡️ DEFENSE ZONE — Ubuntu AI Server<br/>192.168.150.10"]
+        C1["XGBoost ML<br/>98.94% acc"]
+        C2["Suricata IDS<br/>ET Open rules"]
+        C3["Zeek Monitor<br/>Protocol analysis"]
+        D["Orchestration Engine (Python)<br/>3-Tier Escalation<br/>30s / 180s Dedup"]
+    end
+
+    E["✅ pfSense firewall BLOCKED"]
+
+    A -->|Attack Traffic| B
+    B -->|Mirrored Traffic| C1
+    B --> C2
+    B --> C3
+    C1 --> D
+    C2 --> D
+    C3 --> D
+    D -->|SSH pfctl block| E
+
+    style A fill:#2b2b2b,color:#fff,stroke:#888
+    style B fill:#2b2b2b,color:#fff,stroke:#888
+    style C1 fill:#1e1e2f,color:#fff,stroke:#5865f2
+    style C2 fill:#1e1e2f,color:#fff,stroke:#5865f2
+    style C3 fill:#1e1e2f,color:#fff,stroke:#5865f2
+    style D fill:#1e1e2f,color:#fff,stroke:#5865f2
+    style E fill:#0b3d20,color:#a3ffb0,stroke:#2ecc71
 ```
 
 ### Four Detection Layers
