@@ -13,32 +13,34 @@
 
 ## 📑 Table of Contents
 
-- [🎯 Project Overview](#-project-overview)
+- [🎯 Project Overview](#project-overview)
   - [The Problem It Solves](#the-problem-it-solves)
-- [⚡ Key Results](#-key-results)
-- [🏗️ System Architecture](#-system-architecture)
+- [⚡ Key Results](#key-results)
+- [🏗️ System Architecture](#system-architecture)
   - [Four Detection Layers](#four-detection-layers)
   - [Three-Tier Confidence Escalation](#three-tier-confidence-escalation)
-- [📸 Screenshots](#-screenshots)
-- [🗂️ Repository Structure](#-repository-structure)
-- [🚀 Quick Start](#-quick-start)
+- [📸 Screenshots](#screenshots)
+- [🗂️ Repository Structure](#repository-structure)
+- [🚀 Quick Start](#quick-start)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Running the System](#running-the-system)
-- [📊 Dataset](#-dataset)
-- [🛠️ Technology Stack](#-technology-stack)
-- [📈 Model Performance](#-model-performance)
-- [⚠️ Ethical Use Notice](#-ethical-use-notice)
-- [📄 License](#-license)
-- [📬 Contact](#-contact)
+- [📊 Dataset](#dataset)
+- [🛠️ Technology Stack](#technology-stack)
+- [📈 Model Performance](#model-performance)
+- [⚠️ Ethical Use Notice](#ethical-use-notice)
+- [📄 License](#license)
+- [📬 Contact](#contact)
 
 ---
 
+<a id="project-overview"></a>
 ## 🎯 Project Overview
 
 A fully automated, multi-layer network defense system deployed inside a realistic virtualized enterprise network. The system achieves **100% detection rate** across 240 live attack trials with a **Mean Time To Mitigation (MTTM) of 872 ms** — with zero human intervention.
 
+<a id="the-problem-it-solves"></a>
 ### The Problem It Solves
 
 Modern enterprise networks face three interlocking security gaps that no single solution resolves:
@@ -51,6 +53,7 @@ This system resolves all three simultaneously.
 
 ---
 
+<a id="key-results"></a>
 ## ⚡ Key Results
 
 | Metric | Value |
@@ -64,6 +67,7 @@ This system resolves all three simultaneously.
 
 ---
 
+<a id="system-architecture"></a>
 ## 🏗️ System Architecture
 
 ```mermaid
@@ -120,6 +124,7 @@ flowchart TB
     linkStyle default stroke:#888,stroke-width:1.5px
 ```
 
+<a id="four-detection-layers"></a>
 ### Four Detection Layers
 
 | Layer | Technology | What It Catches |
@@ -129,6 +134,7 @@ flowchart TB
 | Protocol Monitor | Zeek | Behavioral anomalies, C2 patterns |
 | Rule Heuristics | Custom Python engine | SYN floods, fast scans, brute force |
 
+<a id="three-tier-confidence-escalation"></a>
 ### Three-Tier Confidence Escalation
 
 - **Tier 1:** Single engine alert → log + elevated monitoring
@@ -137,6 +143,7 @@ flowchart TB
 
 ---
 
+<a id="screenshots"></a>
 ## 📸 Screenshots
 
 <table>
@@ -202,6 +209,7 @@ flowchart TB
 
 ---
 
+<a id="repository-structure"></a>
 ## 🗂️ Repository Structure
 
 ```
@@ -238,8 +246,10 @@ AI-Powered_Cybersecurity-Lab/
 
 ---
 
+<a id="quick-start"></a>
 ## 🚀 Quick Start
 
+<a id="prerequisites"></a>
 ### Prerequisites
 
 - Ubuntu 24.04 LTS (AI Defense Server)
@@ -248,6 +258,7 @@ AI-Powered_Cybersecurity-Lab/
 - pfSense accessible via SSH
 - GNS3 network topology (see `config/network_configuration.md`)
 
+<a id="installation"></a>
 ### Installation
 
 ```bash
@@ -266,6 +277,7 @@ sudo suricata-update  # Download ET Open rules
 sudo apt install zeek -y
 ```
 
+<a id="configuration"></a>
 ### Configuration
 
 Before running, edit `scripts/ai_defense_orchestration.py` and update:
@@ -278,6 +290,7 @@ class Config:
     LOCAL_IF     = "ens33"               # Your capture interface
 ```
 
+<a id="running-the-system"></a>
 ### Running the System
 
 ```bash
@@ -296,6 +309,7 @@ sudo python3 scripts/ai_defense_orchestration.py
 
 ---
 
+<a id="dataset"></a>
 ## 📊 Dataset
 
 The model was trained on a **custom 80,000-sample dataset** captured live from the GNS3/VMware environment using real attack tools (Nmap, hping3, Hydra, Metasploit, Slowloris) — not scripted simulators.
@@ -316,6 +330,7 @@ The model was trained on a **custom 80,000-sample dataset** captured live from t
 
 ---
 
+<a id="technology-stack"></a>
 ## 🛠️ Technology Stack
 
 | Category | Technology |
@@ -333,6 +348,7 @@ The model was trained on a **custom 80,000-sample dataset** captured live from t
 
 ---
 
+<a id="model-performance"></a>
 ## 📈 Model Performance
 
 ```
@@ -349,6 +365,7 @@ See `results/performance_metrics.md` for full per-class breakdown and MTTM resul
 
 ---
 
+<a id="ethical-use-notice"></a>
 ## ⚠️ Ethical Use Notice
 
 This project was developed **strictly for cybersecurity research**.
@@ -360,12 +377,14 @@ This project was developed **strictly for cybersecurity research**.
 
 ---
 
+<a id="license"></a>
 ## 📄 License
 
 MIT License — © 2025 Ahmed Mostafa Hussein
 
 ---
 
+<a id="contact"></a>
 ## 📬 Contact
 
 - **GitHub:** [ahhmedmostafaa](https://github.com/ahhmedmostafaa)
