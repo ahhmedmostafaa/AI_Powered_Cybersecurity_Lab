@@ -149,7 +149,7 @@ flowchart TB
 
 Watch the system detect and mitigate a **Hydra RDP brute-force attack** and an **Nmap SYN scan** in real time — from detection to automated pfSense blocking.
 
-https://github.com/ahhmedmostafaa/AI_Powered_Cybersecurity_Lab/releases/download/demo-video/Video.demonstration.showing.what.the.system.looks.like.and.how.it.works.mp4
+https://github.com/user-attachments/assets/cee8ad7d-3015-494b-bbe1-7ec577d48a8a
 
 ---
 
