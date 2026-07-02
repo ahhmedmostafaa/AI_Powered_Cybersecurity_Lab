@@ -43,41 +43,57 @@ This system resolves all three simultaneously.
 ## 🏗️ System Architecture
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'fontSize':'14px', 'fontFamily':'monospace'}}}%%
 flowchart TB
-    subgraph WAN["🌐 WAN ZONE"]
-        A["Kali Linux Adversary<br/>192.168.180.130 / .131"]
+    A(["💀 Kali Linux Adversary<br/>192.168.180.130 / .131"])
+
+    subgraph WAN[" 🌐  WAN ZONE "]
+        A
     end
 
-    subgraph DMZ["🧱 DMZ / EDGE"]
-        B["pfSense Firewall 2.7.2<br/>192.168.180.129<br/><i>EasyRuleBlockHostsWAN alias</i>"]
+    B["🔥 pfSense Firewall 2.7.2<br/>192.168.180.129<br/><i>EasyRuleBlockHostsWAN alias</i>"]
+
+    subgraph DMZ[" 🧱  DMZ / EDGE "]
+        B
     end
 
-    subgraph DEFENSE["🛡️ DEFENSE ZONE — Ubuntu AI Server (192.168.150.10)"]
-        direction TB
-        C1["XGBoost ML<br/>98.94% acc"]
-        C2["Suricata IDS<br/>ET Open rules"]
-        C3["Zeek Monitor<br/>Protocol analysis"]
-        D["Orchestration Engine (Python)<br/>3-Tier Escalation<br/>30s / 180s Dedup"]
+    subgraph DEFENSE[" 🛡️  DEFENSE ZONE — Ubuntu AI Server · 192.168.150.10 "]
+        C1["🌲 XGBoost ML<br/>98.94% accuracy"]
+        C2["🚨 Suricata IDS<br/>ET Open rules"]
+        C3["🔎 Zeek Monitor<br/>Protocol analysis"]
+        D["⚙️ Orchestration Engine — Python<br/>3-Tier Escalation · 30s / 180s Dedup"]
+        C1 --> D
+        C2 --> D
+        C3 --> D
     end
 
-    E["✅ pfSense firewall BLOCKED"]
+    E(["✅ pfSense Firewall<br/>BLOCKED"])
 
-    A -->|Attack Traffic| B
-    B -->|Mirrored Traffic| C1
-    B --> C2
-    B --> C3
-    C1 --> D
-    C2 --> D
-    C3 --> D
-    D -->|SSH pfctl block| E
+    A ==>|Attack Traffic| B
+    B ==>|Mirrored Traffic| C1
+    B ==> C2
+    B ==> C3
+    D ==>|SSH pfctl block| E
 
-    style A fill:#2b2b2b,color:#fff,stroke:#888
-    style B fill:#2b2b2b,color:#fff,stroke:#888
-    style C1 fill:#1e1e2f,color:#fff,stroke:#5865f2
-    style C2 fill:#1e1e2f,color:#fff,stroke:#5865f2
-    style C3 fill:#1e1e2f,color:#fff,stroke:#5865f2
-    style D fill:#1e1e2f,color:#fff,stroke:#5865f2
-    style E fill:#0b3d20,color:#a3ffb0,stroke:#2ecc71
+    classDef wan fill:#3a1414,stroke:#e74c3c,stroke-width:1.5px,color:#fff,rx:8,ry:8
+    classDef dmz fill:#3a2a10,stroke:#f39c12,stroke-width:1.5px,color:#fff,rx:8,ry:8
+    classDef engine fill:#1a1a2e,stroke:#5865f2,stroke-width:1.5px,color:#fff,rx:8,ry:8
+    classDef orch fill:#242438,stroke:#8b7cf6,stroke-width:2px,color:#fff,rx:8,ry:8
+    classDef success fill:#0b3d20,stroke:#2ecc71,stroke-width:2px,color:#a3ffb0,rx:8,ry:8
+    classDef zoneWan fill:#1a0f0f,stroke:#e74c3c,stroke-width:1px,color:#e74c3c
+    classDef zoneDmz fill:#1f180a,stroke:#f39c12,stroke-width:1px,color:#f39c12
+    classDef zoneDef fill:#15151f,stroke:#5865f2,stroke-width:1px,color:#8ea1ff
+
+    class A wan
+    class B dmz
+    class C1,C2,C3 engine
+    class D orch
+    class E success
+    class WAN zoneWan
+    class DMZ zoneDmz
+    class DEFENSE zoneDef
+
+    linkStyle default stroke:#888,stroke-width:1.5px
 ```
 
 ### Four Detection Layers
