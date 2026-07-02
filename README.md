@@ -19,6 +19,7 @@
 - [🏗️ System Architecture](#system-architecture)
   - [Four Detection Layers](#four-detection-layers)
   - [Three-Tier Confidence Escalation](#three-tier-confidence-escalation)
+- [🎥 Live Attack Demo](#live-attack-demo)
 - [📸 Screenshots](#screenshots)
 - [🗂️ Repository Structure](#repository-structure)
 - [🚀 Quick Start](#quick-start)
@@ -140,6 +141,15 @@ flowchart TB
 - **Tier 1:** Single engine alert → log + elevated monitoring
 - **Tier 2:** Two engines within 30s → structured alert (no auto-block)
 - **Tier 3:** High-confidence (≥65% ML) + multi-engine → **autonomous pfSense SSH block**
+
+---
+
+<a id="live-attack-demo"></a>
+## 🎥 Live Attack Demo
+
+Watch the system detect and mitigate a **Hydra RDP brute-force attack** and an **Nmap SYN scan** in real time — from detection to automated pfSense blocking.
+
+https://github.com/ahhmedmostafaa/AI_Powered_Cybersecurity_Lab/releases/download/demo-video/Video.demonstration.showing.what.the.system.looks.like.and.how.it.works.mp4
 
 ---
 
