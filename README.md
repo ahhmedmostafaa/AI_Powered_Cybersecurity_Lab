@@ -1,6 +1,6 @@
 # 🛡️ AI-Powered Cybersecurity Lab
 
-**An Integrated Multi-Layer Network Defense System using Machine Learning, Intrusion Detection, and Automated Firewall Mitigation**
+**An Integrated Multi-Layer Network Defense System using Machine Learning, Intrusion Detection, and Automated Firewall Mitigation **
 
 > **Author:** Ahmed Mostafa Hussein  
 > **GitHub:** [ahhmedmostafaa](https://github.com/ahhmedmostafaa)
