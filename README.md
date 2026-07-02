@@ -29,7 +29,7 @@
 - [📊 Dataset](#dataset)
 - [🛠️ Technology Stack](#technology-stack)
 - [📈 Model Performance](#model-performance)
-- [⚠️ Ethical Use Notice & Disclaimer](#ethical-use-notice)
+- [⚠️ Ethical Use Notice](#ethical-use-notice)
 - [📄 License](#license)
 - [📬 Contact](#contact)
 
@@ -263,8 +263,8 @@ AI-Powered_Cybersecurity-Lab/
 
 ```bash
 # Clone the repository
-git clone https://github.com/ahhmedmostafaa/AI-Powered_Cybersecurity-Lab.git
-cd AI-Powered_Cybersecurity-Lab
+git clone https://github.com/ahhmedmostafaa/AI-Cybersecurity-Lab.git
+cd AI-Cybersecurity-Lab
 
 # Install Python dependencies
 pip install -r requirements.txt
@@ -280,27 +280,14 @@ sudo apt install zeek -y
 <a id="configuration"></a>
 ### Configuration
 
-Copy `.env.example` to `.env` and fill in your pfSense credentials — **never hardcode credentials directly in the script or commit them to version control**:
-
-```bash
-cp .env.example .env
-```
-
-```env
-PFSENSE_IP=192.168.180.129
-PFSENSE_USER=admin
-PFSENSE_PASS=your_password_here
-LOCAL_IF=ens33
-```
-
-`scripts/ai_defense_orchestration.py` reads these values from `.env` at runtime via the `Config` class — for reference, this is the shape it expects:
+Before running, edit `scripts/ai_defense_orchestration.py` and update:
 
 ```python
 class Config:
-    PFSENSE_IP   = os.getenv("PFSENSE_IP")
-    PFSENSE_USER = os.getenv("PFSENSE_USER")
-    PFSENSE_PASS = os.getenv("PFSENSE_PASS")
-    LOCAL_IF     = os.getenv("LOCAL_IF")
+    PFSENSE_IP   = "YOUR_PFSENSE_IP"    # e.g. 192.168.180.129
+    PFSENSE_USER = "admin"
+    PFSENSE_PASS = "YOUR_PASSWORD"       # ⚠️ Never commit credentials!
+    LOCAL_IF     = "ens33"               # Your capture interface
 ```
 
 <a id="running-the-system"></a>
@@ -379,16 +366,14 @@ See `results/performance_metrics.md` for full per-class breakdown and MTTM resul
 ---
 
 <a id="ethical-use-notice"></a>
-## ⚠️ Ethical Use Notice & Disclaimer
+## ⚠️ Ethical Use Notice
 
-This project was developed **strictly for cybersecurity research and education**.
+This project was developed **strictly for cybersecurity research**.
 
 - All attack simulations were conducted in an **isolated virtualized lab environment**
 - No real networks or systems were targeted
 - The attack scripts (`script0_attack_generator.py`) are provided for **research reproducibility only**
 - **Do not** use any part of this project against systems you do not own or have explicit permission to test
-
-**Disclaimer:** This software is provided "as is" for educational and research purposes only. The author assumes no liability and is not responsible for any misuse or damage caused by this software. Users are solely responsible for complying with applicable local, national, and international laws.
 
 ---
 
