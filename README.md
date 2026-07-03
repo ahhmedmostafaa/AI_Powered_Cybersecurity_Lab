@@ -90,7 +90,7 @@ flowchart TB
         C1["🌲 XGBoost ML<br/>98.94% accuracy"]
         C2["🚨 Suricata IDS<br/>ET Open rules"]
         C3["🔎 Zeek Monitor<br/>Protocol analysis"]
-        D["⚙️ Orchestration Engine — Python<br/>3-Tier Escalation · 30s / 180s Dedup"]
+        D["⚙️ Orchestration Engine — Python<br/>Rule Heuristics + 3-Tier Escalation<br/>30s / 180s Dedup"]
         C1 --> D
         C2 --> D
         C3 --> D
