@@ -348,8 +348,7 @@ The model was trained on a **custom 80,000-sample dataset** captured live from t
 | WebAttack     | 10,000  | SQLi traversal         |
 | SlowLoris     | 10,000  | Python Slowloris       |
 
-> **Dataset Note:** The raw dataset (45.2 MB CSV) is not included in this repository due to size.  
-> It can be regenerated using `script0_attack_generator.py` + `script1_data_collection.py`.
+> **Dataset Note:** The raw dataset (45.2 MB CSV) is not included in this repository for security reasons, as it contains sensitive attack data. It can be regenerated locally using `script0_attack_generator.py` + `script1_data_collection.py`.
 
 ---
 
