@@ -9,6 +9,14 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon" type="image/png" sizes="512x512" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
+  <meta name="description" content="AI-powered multi-layer network defense: XGBoost, Suricata, Zeek and pfSense automation validated across 240 live attack trials." />
+  <meta name="theme-color" content="#060f1c" />
+  <meta property="og:title" content="AI-Powered Cybersecurity Lab" />
+  <meta property="og:description" content="98.94% ML accuracy · 872 ms mean time to mitigation · 240/240 live trials." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <script>(function(){try{var t=localStorage.getItem('theme');if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.setAttribute('data-theme',t)}catch(e){}})()</script>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
   <style>
@@ -412,10 +420,61 @@
       .hero h1 .line1, .hero h1 .line2, .badge-pulse, [data-count].counted { animation: none; }
       .hero h1 .line2::after { animation: none; width: 78%; }
     }
+
+    /* ═══════════════ PRO UPGRADE ═══════════════ */
+    :root { --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace; --ease:cubic-bezier(.2,.8,.2,1); }
+    :root[data-theme="dark"]  { --text-muted:#6d97b6; --border:rgba(0,180,216,.16); }
+    :root[data-theme="light"] { --bg-page:#f3f8fd; --bg-secondary:#e7f1f9; --hero-grad-a:#eaf3fc; --hero-grad-b:#d3e8f7;
+      --text-secondary:#34607f; --text-muted:#4b7694; --border:rgba(15,70,120,.12); --border-strong:rgba(15,70,120,.24); --glow:rgba(0,119,168,.16); }
+    html { scroll-padding-top: 76px; }
+    body { font-family: var(--font); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    ::selection { background: var(--accent); color: #fff; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+    ::-webkit-scrollbar { width: 10px; } ::-webkit-scrollbar-track { background: var(--bg-page); }
+    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 8px; border: 2px solid var(--bg-page); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    .hstat-val, .metric-val, .arch-box-sub, .hero-badge, .section-label { font-family: var(--mono); }
+
+    .progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 300; transform-origin: 0 50%; transform: scaleX(0);
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--purple)); box-shadow: 0 0 10px var(--glow); }
+    .nav { background: color-mix(in srgb, var(--bg-primary) 78%, transparent);
+      backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px);
+      transition: height .3s var(--ease), box-shadow .3s, background .35s; }
+    .nav.scrolled { height: 54px; box-shadow: 0 8px 30px rgba(0,0,0,.16); }
+    .nav-links a.active { color: var(--accent); background: var(--accent-light); }
+    @media (max-width:640px) { .nav.scrolled .nav-links { top: 54px; } .nav-links { background: var(--bg-primary); } }
+
+    .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .btn-primary { position: relative; overflow: hidden; }
+    .btn-primary::after { content: ''; position: absolute; inset: 0; transform: translateX(-120%); transition: transform .7s var(--ease);
+      background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.28) 50%, transparent 70%); }
+    .btn-primary:hover::after { transform: translateX(120%); }
+    .btn-primary:active, .btn-secondary:active, .btn-github:active { transform: scale(.98); }
+
+    .metric-card, .result-card, .tech-card, .layer-card, .arch-box, .about-card { --mx: 50%; --my: 50%; border-radius: 16px; }
+    .metric-card:hover, .result-card:hover, .tech-card:hover, .layer-card:hover, .arch-box:hover, .about-card:hover {
+      background-image: radial-gradient(300px circle at var(--mx) var(--my), var(--accent-light), transparent 70%); }
+    :root[data-theme="light"] .metric-card, :root[data-theme="light"] .result-card, :root[data-theme="light"] .tech-card,
+    :root[data-theme="light"] .layer-card, :root[data-theme="light"] .arch-box, :root[data-theme="light"] .about-card {
+      box-shadow: 0 1px 2px rgba(15,70,120,.06), 0 6px 20px rgba(15,70,120,.06); }
+
+    .arch-arrow i { display: inline-block; animation: flow 1.6s ease-in-out infinite; }
+    @keyframes flow { 0%,100% { transform: translateX(-3px); opacity: .35; } 50% { transform: translateX(4px); opacity: 1; } }
+    .arch-box.highlight { animation: breathe 3.5s ease-in-out infinite; }
+    @keyframes breathe { 0%,100% { box-shadow: 0 0 22px var(--glow); } 50% { box-shadow: 0 0 44px var(--glow), 0 0 0 1px var(--accent); } }
+
+    .to-top { position: fixed; right: 20px; bottom: 20px; width: 44px; height: 44px; border-radius: 12px; z-index: 150;
+      border: 1px solid var(--border-strong); background: var(--bg-primary); color: var(--accent); font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      opacity: 0; transform: translateY(12px); pointer-events: none; transition: all .3s var(--ease); }
+    .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+    .to-top:hover { background: var(--accent); color: #fff; }
+    @media (prefers-reduced-motion: reduce) { .arch-arrow i, .arch-box.highlight { animation: none; } html { scroll-behavior: auto; } }
   </style>
 </head>
 <body>
 
+<div class="progress" id="progress"></div>
 <!-- NAV -->
 <nav class="nav">
   <a class="nav-logo" href="#">
@@ -442,6 +501,7 @@
 <div class="hero">
   <div class="hero-bg-grid"></div>
   <div class="hero-glow"></div>
+  <canvas class="hero-canvas" id="net" aria-hidden="true"></canvas>
   <div class="hero-badge"><span class="badge-pulse"></span>Cybersecurity Research Project</div>
   <h1>
     <span class="line1">AI-Powered</span>
@@ -634,6 +694,8 @@
   <p class="footer-text">AI-Powered Cybersecurity Lab — Built by <span>Ahmed Mostafa Hussein</span></p>
 </div>
 
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="ti ti-arrow-up"></i></button>
+
 <script>
   // THEME
   const root = document.documentElement;
@@ -644,8 +706,7 @@
     icon.className = dark ? 'ti ti-moon' : 'ti ti-sun';
     localStorage.setItem('theme', dark ? 'light' : 'dark');
   }
-  const saved = localStorage.getItem('theme');
-  if (saved) { root.setAttribute('data-theme', saved); icon.className = saved === 'dark' ? 'ti ti-sun' : 'ti ti-moon'; }
+  icon.className = root.getAttribute('data-theme') === 'dark' ? 'ti ti-sun' : 'ti ti-moon';
 
   // NAV
   function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
@@ -653,8 +714,9 @@
 
   // FADE-IN ON SCROLL
   const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); setTimeout(() => { e.target.style.transitionDelay = ''; }, 1300); } });
   }, { threshold: 0.08 });
+  document.querySelectorAll('.results-grid, .tech-grid, .metrics-inner').forEach(g => [...g.children].forEach((c, i) => { c.style.transitionDelay = (i % 6) * 70 + 'ms'; }));
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
   // ANIMATED COUNTERS
@@ -695,6 +757,67 @@
     });
   }, { threshold: 0.4 });
   counters.forEach(el => cObs.observe(el));
+
+  // PROGRESS · NAV STATE · BACK-TO-TOP
+  const nav = document.querySelector('.nav'), bar = document.getElementById('progress'), toTop = document.getElementById('toTop');
+  function onScroll() {
+    const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';
+    nav.classList.toggle('scrolled', y > 20);
+    toTop.classList.toggle('show', y > 600);
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  toTop.onclick = () => scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+
+  // SCROLL-SPY
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const spy = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  links.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t) spy.observe(t); });
+  document.addEventListener('click', e => { if (!e.target.closest('.nav')) closeNav(); });
+
+  // CARD SPOTLIGHT
+  document.addEventListener('pointermove', e => {
+    const c = e.target.closest('.metric-card,.result-card,.tech-card,.layer-card,.arch-box,.about-card');
+    if (!c) return;
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, { passive: true });
+
+  // HERO NETWORK CANVAS
+  (function () {
+    const cv = document.getElementById('net'); if (!cv || reduceMotion) return;
+    const ctx = cv.getContext('2d'), hero = cv.parentElement, mouse = { x: -999, y: -999 };
+    let W, H, pts = [], raf = 0, visible = true;
+    const getCol = () => getComputedStyle(root).getPropertyValue('--accent').trim();
+    let col = getCol();
+    new MutationObserver(() => { col = getCol(); }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    function size() {
+      const d = Math.min(devicePixelRatio || 1, 2);
+      W = hero.clientWidth; H = hero.clientHeight; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+      pts = Array.from({ length: Math.round(Math.min(70, W * H / 16000)) }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35 }));
+    }
+    function frame() {
+      ctx.clearRect(0, 0, W, H); ctx.fillStyle = col; ctx.strokeStyle = col;
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i]; p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.globalAlpha = .55; ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, 6.283); ctx.fill();
+        for (let j = i + 1; j < pts.length; j++) {
+          const q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d = dx * dx + dy * dy;
+          if (d < 14400) { ctx.globalAlpha = (1 - d / 14400) * .28; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+        }
+        const mx = p.x - mouse.x, my = p.y - mouse.y, md = mx * mx + my * my;
+        if (md < 22500) { ctx.globalAlpha = (1 - md / 22500) * .5; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+      }
+      raf = visible ? requestAnimationFrame(frame) : 0;
+    }
+    hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+    hero.addEventListener('pointerleave', () => { mouse.x = mouse.y = -999; });
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(frame); }).observe(hero);
+    addEventListener('resize', size); size(); raf = requestAnimationFrame(frame);
+  })();
 </script>
 </body>
 </html>
