@@ -153,11 +153,32 @@
       line-height: 1.08; margin-bottom: 22px; letter-spacing: -1.5px;
     }
     .hero h1 .line1 { color: var(--text-primary); display: block; }
+    .hero h1 .line1 { animation: riseIn 0.8s cubic-bezier(.2,.8,.2,1) both; }
     .hero h1 .line2 {
-      display: block; color: transparent;
-      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--purple));
+      display: block; width: fit-content; max-width: 100%;
+      margin: 0 auto; position: relative;
+      padding: 0 6px 0.14em;
+      color: transparent; -webkit-text-fill-color: transparent;
+      background: linear-gradient(100deg,
+        var(--accent) 0%, var(--accent2) 25%, var(--purple) 50%,
+        var(--accent2) 75%, var(--accent) 100%);
+      background-size: 240% 100%;
       -webkit-background-clip: text; background-clip: text;
+      filter: drop-shadow(0 0 22px var(--glow));
+      animation: riseIn 0.9s 0.15s cubic-bezier(.2,.8,.2,1) both,
+                 gradientFlow 7s ease-in-out 1.1s infinite;
     }
+    .hero h1 .line2::after {
+      content: ''; position: absolute; left: 50%; bottom: -4px;
+      height: 3px; width: 0; border-radius: 3px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, transparent, var(--accent), var(--purple), transparent);
+      box-shadow: 0 0 16px var(--glow);
+      animation: underlineGrow 1.3s 0.7s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    @keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes gradientFlow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes underlineGrow { to { width: 78%; } }
     .hero-sub {
       position: relative; font-size: 17px; color: var(--text-secondary);
       line-height: 1.8; max-width: 600px; margin: 0 auto 44px;
@@ -381,6 +402,16 @@
     /* ═══════════════ ANIMATIONS ═══════════════ */
     .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════ COUNTERS ═══════════════ */
+    [data-count] { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+    [data-count].counted { animation: countPop 0.5s ease-out; }
+    @keyframes countPop { 0% { transform: scale(1); } 40% { transform: scale(1.07); text-shadow: 0 0 18px var(--glow); } 100% { transform: scale(1); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero h1 .line1, .hero h1 .line2, .badge-pulse, [data-count].counted { animation: none; }
+      .hero h1 .line2::after { animation: none; width: 78%; }
+    }
   </style>
 </head>
 <body>
@@ -429,25 +460,25 @@
     </a>
   </div>
   <div class="hero-stats">
-    <div class="hstat"><span class="hstat-val">98.94%</span><span class="hstat-label">ML Accuracy</span></div>
+    <div class="hstat"><span class="hstat-val" data-count="98.94" data-decimals="2" data-suffix="%">98.94%</span><span class="hstat-label">ML Accuracy</span></div>
     <div class="hstat-sep"></div>
-    <div class="hstat"><span class="hstat-val">872ms</span><span class="hstat-label">Mean MTTM</span></div>
+    <div class="hstat"><span class="hstat-val" data-count="872" data-suffix="ms">872ms</span><span class="hstat-label">Mean MTTM</span></div>
     <div class="hstat-sep"></div>
-    <div class="hstat"><span class="hstat-val">240/240</span><span class="hstat-label">Trials Passed</span></div>
+    <div class="hstat"><span class="hstat-val" data-count="240" data-suffix="/240">240/240</span><span class="hstat-label">Trials Passed</span></div>
     <div class="hstat-sep"></div>
-    <div class="hstat"><span class="hstat-val">80K</span><span class="hstat-label">Dataset Samples</span></div>
+    <div class="hstat"><span class="hstat-val" data-count="80" data-suffix="K">80K</span><span class="hstat-label">Dataset Samples</span></div>
   </div>
 </div>
 
 <!-- METRICS -->
 <div class="metrics">
   <div class="metrics-inner">
-    <div class="metric-card fade-in"><span class="metric-val">98.94%</span><span class="metric-label">XGBoost accuracy on 16,000-sample test set</span></div>
-    <div class="metric-card fade-in"><span class="metric-val">872 ms</span><span class="metric-label">Mean time to mitigation across all trials</span></div>
-    <div class="metric-card fade-in"><span class="metric-val">240/240</span><span class="metric-label">Live attack trials — 100% detection rate</span></div>
-    <div class="metric-card fade-in"><span class="metric-val">80,000</span><span class="metric-label">Custom labeled samples from live network</span></div>
-    <div class="metric-card fade-in"><span class="metric-val">4 Layers</span><span class="metric-label">XGBoost + Suricata + Zeek + Heuristics</span></div>
-    <div class="metric-card fade-in"><span class="metric-val">8 Classes</span><span class="metric-label">Attack categories covered end-to-end</span></div>
+    <div class="metric-card fade-in"><span class="metric-val" data-count="98.94" data-decimals="2" data-suffix="%">98.94%</span><span class="metric-label">XGBoost accuracy on 16,000-sample test set</span></div>
+    <div class="metric-card fade-in"><span class="metric-val" data-count="872" data-suffix=" ms">872 ms</span><span class="metric-label">Mean time to mitigation across all trials</span></div>
+    <div class="metric-card fade-in"><span class="metric-val" data-count="240" data-suffix="/240">240/240</span><span class="metric-label">Live attack trials — 100% detection rate</span></div>
+    <div class="metric-card fade-in"><span class="metric-val" data-count="80000" data-sep="true">80,000</span><span class="metric-label">Custom labeled samples from live network</span></div>
+    <div class="metric-card fade-in"><span class="metric-val" data-count="4" data-suffix=" Layers">4 Layers</span><span class="metric-label">XGBoost + Suricata + Zeek + Heuristics</span></div>
+    <div class="metric-card fade-in"><span class="metric-val" data-count="8" data-suffix=" Classes">8 Classes</span><span class="metric-label">Attack categories covered end-to-end</span></div>
   </div>
 </div>
 
@@ -625,6 +656,45 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.08 });
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // ANIMATED COUNTERS
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const counters = document.querySelectorAll('[data-count]');
+
+  function fmt(v, dec, sep) {
+    let s = v.toFixed(dec);
+    if (sep) { const [i, d] = s.split('.'); s = i.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (d ? '.' + d : ''); }
+    return s;
+  }
+  function render(el, v) {
+    el.textContent = (el.dataset.prefix || '') + fmt(v, +el.dataset.decimals || 0, el.dataset.sep === 'true') + (el.dataset.suffix || '');
+  }
+  function runCounter(el) {
+    if (el.dataset.done) return;
+    el.dataset.done = '1';
+    const end = parseFloat(el.dataset.count);
+    if (reduceMotion) { render(el, end); return; }
+    const dur = +el.dataset.duration || 2200, t0 = performance.now();
+    (function tick(now) {
+      const p = Math.min((now - t0) / dur, 1);
+      const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);   // easeOutExpo
+      render(el, end * eased);
+      if (p < 1) requestAnimationFrame(tick);
+      else { el.classList.add('counted'); }
+    })(t0);
+  }
+  if (!reduceMotion) counters.forEach(el => render(el, 0));
+  const cObs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const group = el.closest('.hero-stats, .metrics-inner');
+      const idx = group ? [...group.querySelectorAll('[data-count]')].indexOf(el) : 0;
+      setTimeout(() => runCounter(el), 250 + idx * 130);
+      o.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(el => cObs.observe(el));
 </script>
 </body>
 </html>
