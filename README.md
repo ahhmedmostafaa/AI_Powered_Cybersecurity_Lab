@@ -1,417 +1,274 @@
-# 🛡️ AI-Powered Cybersecurity Lab
+# 🛡️ SOC Home Lab — Enterprise-Style SIEM, Detection Engineering & SOAR Automation
 
-**An Integrated Multi-Layer Network Defense System using Machine Learning, Intrusion Detection, and Automated Firewall Mitigation**
+![SOC Home Lab — SIEM, Detection Engineering & SOAR Automation](./soc-homelab-cover.png)
 
-> **Author:** Ahmed Mostafa Hussein  
-> **GitHub:** [ahhmedmostafaa](https://github.com/ahhmedmostafaa)
+> A fully self-built Security Operations Center lab simulating a realistic enterprise environment: Active Directory, endpoint telemetry, a SIEM pipeline, custom detections mapped to MITRE ATT&CK, threat hunting, hybrid cloud monitoring, and a working SOAR automation layer with human-in-the-loop approvals.
 
-<br>
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21083517.svg)](https://doi.org/10.5281/zenodo.21083517)
+**Author:** Ahmed Mostafa Hussein
+**Status:** Actively maintained | Built end-to-end from scratch on a single workstation
 
 ---
 
 ## 📑 Table of Contents
 
-- [🎯 Project Overview](#project-overview)
-  - [The Problem It Solves](#the-problem-it-solves)
-- [⚡ Key Results](#key-results)
-- [🏗️ System Architecture](#system-architecture)
-  - [Four Detection Layers](#four-detection-layers)
-  - [Three-Tier Confidence Escalation](#three-tier-confidence-escalation)
-- [🎥 Live Attack Demo](#live-attack-demo)
-- [📸 Screenshots](#screenshots)
-- [🗂️ Repository Structure](#repository-structure)
-- [🚀 Quick Start](#quick-start)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Running the System](#running-the-system)
-- [📊 Dataset](#dataset)
-- [🛠️ Technology Stack](#technology-stack)
-- [📈 Model Performance](#model-performance)
-- [⚠️ Ethical Use Notice & Disclaimer](#ethical-use-notice)
-- [📄 License](#license)
-- [📬 Contact](#contact)
+- [Why This Project Exists](#-why-this-project-exists)
+- [Live Demo](#-live-demo)
+- [Architecture Overview](#architecture-overview)
+- [What's Inside This Repo](#-whats-inside-this-repo)
+- [Repository Structure](#-repository-structure)
+- [Tech Stack](#-tech-stack)
+- [Detection Coverage (MITRE ATT&CK)](#-detection-coverage-mitre-attck)
+- [SOAR Automation Highlights](#-soar-automation-highlights)
+- [Hybrid Cloud Monitoring](#hybrid-cloud-monitoring)
+- [Dashboard](#-dashboard)
+- [Threat Hunting](#-threat-hunting)
+- [Lab Safety Notes](#lab-safety-notes)
+- [Acknowledgements](#-acknowledgements)
+- [License](#-license)
+- [Contact](#-contact)
 
 ---
 
-<a id="project-overview"></a>
-## 🎯 Project Overview
+## 📌 Why This Project Exists
 
-A fully automated, multi-layer network defense system deployed inside a realistic virtualized enterprise network. The system achieves **100% detection rate** across 240 live attack trials with a **Mean Time To Mitigation (MTTM) of 872 ms** — with zero human intervention.
+Most "SOC home lab" projects stop at installing Splunk and triggering one brute-force alert. This project goes further: it builds a small but realistic **enterprise network** (domain controller, endpoints, firewall, attacker machine), wires up **real telemetry pipelines**, writes **custom detections** for the attacks actually executed in the lab, performs **manual threat hunting**, extends monitoring into a **hybrid cloud asset (Azure)**, and — critically — closes the loop with a **SOAR platform** that enriches, notifies, and (with analyst approval) remediates automatically.
 
-<a id="the-problem-it-solves"></a>
-### The Problem It Solves
-
-Modern enterprise networks face three interlocking security gaps that no single solution resolves:
-
-1. **Detection Coverage Gaps** — Signature-based IDS miss behavioral threats; ML-only models fail on real traffic
-2. **Alert Flooding** — Multiple engines without deduplication overwhelm analysts
-3. **No Automated Remediation** — Most systems stop at alert generation; manual response takes hours
-
-This system resolves all three simultaneously.
+Every alert in this repo fired because an attack was actually run against the lab. Nothing here is theoretical.
 
 ---
 
-<a id="key-results"></a>
-## ⚡ Key Results
+## 🎬 Live Demo
 
-| Metric | Value |
-|--------|-------|
-| AI Detection Accuracy | **98.94%** |
-| Attack Detection & Mitigation Rate | **100%** (240/240 trials) |
-| Mean Time To Mitigation (MTTM) | **872 ms** |
-| Live Attack Trials | **240** (30 per category) |
-| Custom Dataset Size | **80,000** labeled flow samples |
-| Attack Categories Covered | **8** |
+A recorded walkthrough of the lab in action:
+
+https://github.com/user-attachments/assets/91c96947-8d95-4789-82cb-275f28695cde
 
 ---
 
-<a id="system-architecture"></a>
-## 🏗️ System Architecture
+<a id="architecture-overview"></a>
+
+## 🏗️ Architecture Overview
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': {'fontSize':'14px', 'fontFamily':'monospace'}}}%%
-flowchart TB
-    A(["💀 Kali Linux Adversary<br/>192.168.180.130 / .131"])
+%%{init: {"flowchart": {"nodeSpacing": 28, "rankSpacing": 40, "padding": 10}}}%%
+flowchart LR
+    INET[("🌐 Internet")]
+    AZURE["☁️ Azure VM<br/>Ubuntu · public<br/>SSH target"]
+    NGROK["🔒 ngrok<br/>HTTPS tunnel"]
 
-    subgraph WAN[" 🌐  WAN ZONE "]
-        A
+    subgraph FW["pfSense Firewall"]
+        direction TB
+        WAN["WAN"]
+        LANIF["LAN"]
+        OPT["ATTACKER"]
     end
 
-    B["🔥 pfSense Firewall 2.7.2<br/>192.168.180.129<br/><i>EasyRuleBlockHostsWAN alias</i>"]
-
-    subgraph DMZ[" 🧱  DMZ / EDGE "]
-        B
+    subgraph ATTACKER["Attacker Network — 192.168.20.0/24"]
+        KALI["🧨 LAB-KALI<br/>Hydra · Nmap"]
     end
 
-    subgraph DEFENSE[" 🛡️  DEFENSE ZONE — Ubuntu AI Server · 192.168.150.10 "]
-        C1["🌲 XGBoost ML<br/>98.94% accuracy"]
-        C2["🚨 Suricata IDS<br/>ET Open rules"]
-        C3["🔎 Zeek Monitor<br/>Protocol analysis"]
-        D["⚙️ Orchestration Engine — Python<br/>Rule Heuristics + 3-Tier Escalation<br/>30s / 180s Dedup"]
-        C1 --> D
-        C2 --> D
-        C3 --> D
+    subgraph LAN["Corporate LAN — 192.168.10.0/24"]
+        direction TB
+        DC["🖥️ LAB-DC1<br/>AD · DNS<br/>Sysmon + UF"]
+        WS10["💻 LAB-WS10<br/>Windows 10<br/>Sysmon + UF"]
+        WS11["💻 LAB-WS11<br/>Windows 11<br/>Sysmon + UF"]
+        SPLUNK["📊 LAB-SPLUNK1<br/>Splunk Enterprise<br/>+ Shuffle SOAR"]
     end
 
-    E(["✅ pfSense Firewall<br/>BLOCKED"])
+    WAN ~~~ LANIF ~~~ OPT
+    INET --- AZURE
+    INET --- WAN
+    AZURE -- "auth.log (HEC)" --> NGROK
+    NGROK --> SPLUNK
 
-    A ==>|Attack Traffic| B
-    B ==>|Mirrored Traffic| C1
-    B ==> C2
-    B ==> C3
-    D ==>|SSH pfctl block| E
+    LANIF --- LAN
+    OPT --- KALI
 
-    classDef wan fill:#3a1414,stroke:#e74c3c,stroke-width:1.5px,color:#fff,rx:8,ry:8
-    classDef dmz fill:#3a2a10,stroke:#f39c12,stroke-width:1.5px,color:#fff,rx:8,ry:8
-    classDef engine fill:#1a1a2e,stroke:#5865f2,stroke-width:1.5px,color:#fff,rx:8,ry:8
-    classDef orch fill:#242438,stroke:#8b7cf6,stroke-width:2px,color:#fff,rx:8,ry:8
-    classDef success fill:#0b3d20,stroke:#2ecc71,stroke-width:2px,color:#a3ffb0,rx:8,ry:8
-    classDef zoneWan fill:#1a0f0f,stroke:#e74c3c,stroke-width:1px,color:#e74c3c
-    classDef zoneDmz fill:#1f180a,stroke:#f39c12,stroke-width:1px,color:#f39c12
-    classDef zoneDef fill:#15151f,stroke:#5865f2,stroke-width:1px,color:#8ea1ff
+    DC -.-> SPLUNK
+    WS10 -.-> SPLUNK
+    WS11 -.-> SPLUNK
+    LANIF -. syslog .-> SPLUNK
 
-    class A wan
-    class B dmz
-    class C1,C2,C3 engine
-    class D orch
-    class E success
-    class WAN zoneWan
-    class DMZ zoneDmz
-    class DEFENSE zoneDef
-
-    linkStyle default stroke:#888,stroke-width:1.5px
+    style SPLUNK fill:#2e7d32,color:#fff
+    style KALI fill:#c62828,color:#fff
+    style AZURE fill:#0078d4,color:#fff
+    style NGROK fill:#616161,color:#fff
 ```
 
-<a id="four-detection-layers"></a>
-### Four Detection Layers
-
-| Layer | Technology | What It Catches |
-|-------|-----------|-----------------|
-| ML Classifier | XGBoost (behavioral) | Botnet, DataExfil, SlowLoris, all 8 categories |
-| Signature IDS | Suricata + ET Open rules | Known attack signatures (6/8 categories) |
-| Protocol Monitor | Zeek | Behavioral anomalies, C2 patterns |
-| Rule Heuristics | Custom Python engine | SYN floods, fast scans, brute force |
-
-<a id="three-tier-confidence-escalation"></a>
-### Three-Tier Confidence Escalation
-
-- **Tier 1:** Single engine alert → log + elevated monitoring
-- **Tier 2:** Two engines within 30s → structured alert (no auto-block)
-- **Tier 3:** High-confidence (≥65% ML) + multi-engine → **autonomous pfSense SSH block**
+**Domain:** `soclab.internal` | **Networks:** VMware Workstation, 3 isolated virtual switches | **Core platform:** Splunk Enterprise (Trial) + Splunk Universal Forwarders
 
 ---
 
-<a id="live-attack-demo"></a>
-## 🎥 Live Attack Demo
+## 🧩 What's Inside This Repo
 
-Watch the system detect and mitigate a **Hydra RDP brute-force attack** and an **Nmap SYN scan** in real time — from detection to automated pfSense blocking.
-
-https://github.com/user-attachments/assets/cee8ad7d-3015-494b-bbe1-7ec577d48a8a
-
----
-
-<a id="screenshots"></a>
-## 📸 Screenshots
-
-<table>
-<tr>
-<td width="50%">
-
-**Full Network Topology**
-![Network Topology](images/02-network-topology/01-full-network-topology.png)
-
-</td>
-<td width="50%">
-
-**Lab Environment — All VMs Running**
-![VMware VMs](images/01-lab-environment/01-vmware-workstation-vms.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**3-Layer Defense — Live & Active**
-![Defense active](images/05-defense-system-startup/01-three-layer-defense-active.png)
-
-</td>
-<td width="50%">
-
-**Session Summary — 100% Detection Rate**
-![Session summary](images/05-defense-system-startup/02-final-session-summary.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Model Performance — 98.94% Accuracy**
-![Performance metrics](images/04-model-training/05-performance-metrics.png)
-
-</td>
-<td width="50%">
-
-**Confusion Matrix & Feature Importance**
-![Confusion matrix](images/04-model-training/06-confusion-matrix-feature-importance.png)
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**Botnet Attack — Detected & Blocked**
-![Botnet detection](images/06-attack-detection-response/12-botnet-detection.png)
-
-</td>
-<td width="50%">
-
-**pfSense — Blocked IPs Table**
-![Blocked IPs Table](images/07-firewall-pfsense/04-blocked-ips-table.png)
-
-</td>
-</tr>
-</table>
-
-> 📁 More screenshots (full data collection & training pipeline, every attack type, firewall rules) are organized in [`images/`](images/).
+| Folder | Contents |
+|---|---|
+| [`infrastructure-setup/`](./infrastructure-setup) | Building the network, pfSense, Active Directory, Sysmon, audit policies, and Splunk from scratch |
+| [`detections/`](./detections) | 10 custom SPL detections, each mapped to a MITRE ATT&CK technique, each validated against a real attack |
+| [`threat-hunting/`](./threat-hunting) | Manual hunts for PowerShell obfuscation, LOLBins, off-hours logons, and lateral movement indicators |
+| [`cloud-integration/`](./cloud-integration) | Extending the SIEM to monitor a public-facing Azure VM over a secure tunnel (hybrid monitoring) |
+| [`soar-automation/`](./soar-automation) | Self-hosted Shuffle SOAR platform (Docker) — a master playbook that enriches, notifies via Telegram/Email, and blocks IPs on pfSense pending human approval |
+| [`dashboards/`](./dashboards) | A seven-panel SOC Detection Overview dashboard: alert volume and severity, MITRE ATT&CK coverage, log-ingestion health, and an SPL-linked triage queue |
+| [`architecture/`](./architecture) | Network diagrams and design decisions |
 
 ---
 
-<a id="repository-structure"></a>
-## 🗂️ Repository Structure
+## 📁 Repository Structure
 
-```
-AI-Powered_Cybersecurity-Lab/
+```text
+SOC-SIEM-SOAR-HomeLab/
+├── README.md
+├── LICENSE
+├── soc-homelab-cover.png
 │
-├── scripts/
-│   ├── script0_attack_generator.py       # Automated Threat Orchestration Engine (Kali side)
-│   ├── script1_data_collection.py        # Live traffic capture with Scapy (Ubuntu side)
-│   ├── script2_model_training.py         # XGBoost training pipeline
-│   └── ai_defense_orchestration.py       # Final 4-layer defense system (production)
+├── architecture/
+│   └── README.md                       # Data-flow diagrams, layer summary, design decisions
 │
-├── config/
-│   └── network_configuration.md          # Full network topology & IP addressing
+├── infrastructure-setup/
+│   ├── README.md                       # Build order and rationale
+│   ├── 01-network-and-pfsense.md
+│   ├── 02-active-directory.md
+│   ├── 03-sysmon-and-audit-policy.md
+│   ├── 04-splunk-installation.md
+│   └── screenshots/
 │
-├── results/
-│   └── performance_metrics.md            # All results: accuracy, MTTM, per-class metrics
+├── detections/
+│   ├── README.md                       # Detection index, shared alert schema, severity logic
+│   ├── 01-… to 10-*.md                 # One write-up per detection (10)
+│   └── screenshots/
 │
-├── images/                               # Screenshots (see Screenshots section above)
-│   ├── 01-lab-environment/
-│   ├── 02-network-topology/
-│   ├── 03-data-collection/
-│   ├── 04-model-training/
-│   ├── 05-defense-system-startup/
-│   ├── 06-attack-detection-response/
-│   └── 07-firewall-pfsense/
+├── threat-hunting/
+│   ├── README.md
+│   ├── 01-… to 04-*.md                 # One write-up per hunt (4)
+│   └── screenshots/
 │
-├── docs/                                 # Research paper
+├── cloud-integration/
+│   ├── README.md
+│   ├── 01-azure-vm-deployment.md
+│   ├── 02-hybrid-log-forwarding.md
+│   └── screenshots/
 │
-├── requirements.txt
-├── .env.example                          # Template for pfSense credentials — copy to .env
-├── .gitignore
-└── README.md
+├── soar-automation/
+│   ├── README.md
+│   ├── 01-soc-master-playbook.md
+│   ├── 02-enrich-ip.md
+│   ├── 03-enrich-identity.md
+│   ├── 04-block-ip-pfsense.md
+│   ├── 05-check-telegram-approvals.md
+│   └── screenshots/
+│
+└── dashboards/
+    ├── README.md                       # The seven-panel SOC Detection Overview dashboard
+    └── screenshots/
 ```
 
 ---
 
-<a id="quick-start"></a>
-## 🚀 Quick Start
+## 🔧 Tech Stack
 
-<a id="prerequisites"></a>
-### Prerequisites
-
-- Ubuntu 24.04 LTS (AI Defense Server)
-- Python 3.10+
-- Suricata 8.x + Zeek 8.x installed
-- pfSense accessible via SSH
-- GNS3 network topology (see `config/network_configuration.md`)
-
-<a id="installation"></a>
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/ahhmedmostafaa/AI-Powered_Cybersecurity-Lab.git
-cd AI-Powered_Cybersecurity-Lab
-
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Install Suricata (Ubuntu)
-sudo apt install suricata -y
-sudo suricata-update  # Download ET Open rules
-
-# Install Zeek (Ubuntu)
-sudo apt install zeek -y
-```
-
-<a id="configuration"></a>
-### Configuration
-
-Copy `.env.example` to `.env` and fill in your pfSense credentials — **never hardcode credentials directly in the script or commit them to version control**:
-
-```bash
-cp .env.example .env
-```
-
-```env
-PFSENSE_IP=192.168.180.129
-PFSENSE_USER=admin
-PFSENSE_PASS=your_password_here
-LOCAL_IF=ens33
-```
-
-`scripts/ai_defense_orchestration.py` reads these values from `.env` at runtime via the `Config` class — for reference, this is the shape it expects:
-
-```python
-class Config:
-    PFSENSE_IP   = os.getenv("PFSENSE_IP")
-    PFSENSE_USER = os.getenv("PFSENSE_USER")
-    PFSENSE_PASS = os.getenv("PFSENSE_PASS")
-    LOCAL_IF     = os.getenv("LOCAL_IF")
-```
-
-<a id="running-the-system"></a>
-### Running the System
-
-```bash
-# Step 1 — Generate attack traffic for dataset (Kali Linux)
-sudo python3 scripts/script0_attack_generator.py --target 192.168.50.11
-
-# Step 2 — Capture live traffic (Ubuntu AI Server)
-sudo python3 scripts/script1_data_collection.py --iface ens33 --samples 10000
-
-# Step 3 — Train the XGBoost model
-python3 scripts/script2_model_training.py
-
-# Step 4 — Launch the defense system
-sudo python3 scripts/ai_defense_orchestration.py
-```
+**SIEM / Data Platform:** Splunk Enterprise 10.6.1.1, Splunk Universal Forwarder, HTTP Event Collector (HEC)
+**Infrastructure:** VMware Workstation, pfSense (firewall/router), Windows Server (AD DS, GPO), Windows 10/11 endpoints, Ubuntu Server
+**Telemetry:** Sysmon (SwiftOnSecurity config), Windows Advanced Audit Policy, PowerShell Script Block Logging, pfSense filterlog (syslog)
+**Offense / Validation:** Kali Linux, Hydra, Nmap
+**Cloud:** Microsoft Azure (Azure for Students), ngrok (secure tunneling)
+**Automation / SOAR:** Shuffle (self-hosted via Docker Compose), Telegram Bot API, VirusTotal API, AbuseIPDB API
+**Frameworks:** MITRE ATT&CK
 
 ---
 
-<a id="dataset"></a>
-## 📊 Dataset
+## 🎯 Detection Coverage (MITRE ATT&CK)
 
-The model was trained on a **custom 80,000-sample dataset** captured live from the GNS3/VMware environment using real attack tools (Nmap, hping3, Hydra, Metasploit, Slowloris) — not scripted simulators.
+| Tactic | Technique | Detection |
+|---|---|---|
+| Discovery | T1046 — Network Service Discovery | Port Scan Detected (pfSense) |
+| Credential Access | T1110.001 — Password Guessing | Brute Force – Multiple Failed Logons (Windows) |
+| Credential Access | T1110.001 — Password Guessing | SSH Brute Force Detected (Linux / Azure) |
+| Credential Access | T1558.003 — Kerberoasting | Kerberoasting Detected (4769) |
+| Credential Access | T1003.001 — LSASS Memory | Credential Dumping – LSASS Access (Sysmon 10) |
+| Persistence | T1053.005 — Scheduled Task | Suspicious Scheduled Task Created (4698) |
+| Persistence | T1547.001 — Registry Run Keys | Registry Persistence – Run Key Modified |
+| Persistence / Priv Esc | T1098 — Account Manipulation | Privileged Group Membership Change |
+| Lateral Movement | T1021.001 — Remote Desktop Protocol | RDP Logon Detected (4624 – Type 10) |
+| Defense Evasion | T1070.001 — Clear Windows Event Logs | Log Clearing Detected (1102) |
 
-| Class         | Samples | Tool Used              |
-|---------------|---------|------------------------|
-| BENIGN        | 10,000  | curl / FTP / DNS       |
-| PortScan      | 10,000  | Nmap (-sS, -sV)        |
-| DDoS          | 10,000  | hping3 --flood         |
-| BruteForce    | 10,000  | Hydra SSH/RDP          |
-| Botnet        | 10,000  | Metasploit Meterpreter |
-| DataExfil     | 10,000  | curl POST bulk         |
-| WebAttack     | 10,000  | SQLi traversal         |
-| SlowLoris     | 10,000  | Python Slowloris       |
-
-> **Dataset Note:** The raw dataset (45.2 MB CSV) is not included in this repository for security reasons, as it contains sensitive attack data. It can be regenerated locally using `script0_attack_generator.py` + `script1_data_collection.py`.
-
----
-
-<a id="technology-stack"></a>
-## 🛠️ Technology Stack
-
-| Category | Technology |
-|----------|-----------|
-| Network Simulation | GNS3 + VMware Workstation 16 Pro |
-| Enterprise Routing | Cisco IOS 15.2 (C7200) + OSPF |
-| Switching | Cisco IOU L2 (802.1Q VLANs) |
-| Firewall | pfSense 2.7.2 (FreeBSD) |
-| ML Engine | Python + XGBoost 2.0.3 |
-| Traffic Capture | Scapy 2.5.0 |
-| Signature IDS | Suricata 8.0.3 + ET Open rules |
-| Protocol Monitor | Zeek 8.1.1 |
-| Attacker OS | Kali Linux 2025.2 |
-| Defense Server | Ubuntu 24.04.3 LTS |
+Full detail, SPL query, and validation steps for each detection are in [`detections/`](./detections).
 
 ---
 
-<a id="model-performance"></a>
-## 📈 Model Performance
+## 🤖 SOAR Automation Highlights
 
-```
-Overall Accuracy:   98.94%
-Macro Precision:    98.93%
-Macro Recall:       98.92%
-Macro F1-Score:     98.92%
+This isn't a single webhook-to-Slack demo. The automation layer includes:
 
-Inference Speed:    ~11,200 samples/second
-Per-sample latency: ~0.089 ms
-```
+- **A central router playbook** ([`SOC-Master-Playbook`](./soar-automation/01-soc-master-playbook.md)) that receives any Splunk alert and routes it to the correct enrichment sub-workflow based on alert type.
+- **[IP enrichment](./soar-automation/02-enrich-ip.md)** against VirusTotal and AbuseIPDB, with logic to skip enrichment for private/internal IP ranges.
+- **[Human-in-the-loop approval](./soar-automation/05-check-telegram-approvals.md)** via a Telegram bot: high-impact actions (blocking an IP) require an analyst to tap "Block" or "Ignore" before anything is applied.
+- **[Real remediation](./soar-automation/04-block-ip-pfsense.md)** — approved blocks are pushed live to a pfSense firewall alias via API, not just logged.
+- **Multi-channel notification** — full incident detail by email, condensed real-time alert + action buttons via Telegram.
 
-See `results/performance_metrics.md` for full per-class breakdown and MTTM results.
+See [`soar-automation/`](./soar-automation) for workflow diagrams and design notes.
 
 ---
 
-<a id="ethical-use-notice"></a>
-## ⚠️ Ethical Use Notice & Disclaimer
+<a id="hybrid-cloud-monitoring"></a>
 
-This project was developed **strictly for cybersecurity research and education**.
+## ☁️ Hybrid Cloud Monitoring
 
-- All attack simulations were conducted in an **isolated virtualized lab environment**
-- No real networks or systems were targeted
-- The attack scripts (`script0_attack_generator.py`) are provided for **research reproducibility only**
-- **Do not** use any part of this project against systems you do not own or have explicit permission to test
+To demonstrate monitoring beyond the local network, the lab extends into Microsoft Azure:
 
-**Disclaimer:** This software is provided "as is" for educational and research purposes only. The author assumes no liability and is not responsible for any misuse or damage caused by this software. Users are solely responsible for complying with applicable local, national, and international laws.
+- A public-facing Ubuntu VM was deployed in Azure (Azure for Students subscription).
+- Since the lab has no public IP, an **ngrok secure tunnel** exposes the local Splunk HTTP Event Collector to the internet over HTTPS.
+- The Azure VM forwards its `auth.log` to Splunk in near real time via a lightweight `systemd` service.
+- A dedicated detection (SSH Brute Force – Linux) distinguishes classic brute force from password-spraying based on the diversity of targeted usernames.
+
+Full write-up: [`cloud-integration/`](./cloud-integration) — [VM deployment](./cloud-integration/01-azure-vm-deployment.md) and [hybrid log forwarding](./cloud-integration/02-hybrid-log-forwarding.md)
 
 ---
 
-<a id="license"></a>
+## 📊 Dashboard
+
+A single-pane **SOC Detection Overview** dashboard answers what an analyst asks at the start of a shift:
+
+![SOC Detection Overview dashboard](./dashboards/screenshots/00-dashboard-overview.png)
+
+- Alerts fired per detection, by severity, and over time
+- A live MITRE ATT&CK coverage table (tactic → technique → detection → platform)
+- **Asset & log ingestion health** — a Silent/Online heartbeat per host, so "no alerts" can be told apart from "no data"
+- A recent-alerts **triage queue** exposing the SPL behind each alert
+
+Full walkthrough: [`dashboards/`](./dashboards).
+
+---
+
+## 🔍 Threat Hunting
+
+Beyond automated alerting, four manual hunts were performed to search for activity that wouldn't necessarily trigger a scheduled alert — including one hunt that surfaced a legitimate, unrelated data-integrity issue (a corrupted Sysmon bucket from an earlier abrupt shutdown), investigated and confirmed isolated. See [`threat-hunting/`](./threat-hunting).
+
+---
+
+<a id="lab-safety-notes"></a>
+
+## ⚠️ Lab Safety Notes
+
+- All networks are fully isolated from the host machine and home network (no bridged adapters, DHCP disabled on internal segments).
+- Credentials shown in documentation are lab-only and have never been reused elsewhere.
+- The Azure VM's SSH access is restricted to a single source IP via NSG rules.
+- This repository does not include live API tokens, webhook URLs, or credentials — placeholders are used throughout.
+
+---
+
+## 🙏 Acknowledgements
+
+Built as a self-directed learning project to develop and demonstrate practical SOC Analyst (L1/L2) skills: SIEM administration, detection engineering, threat hunting, and security automation.
+
+---
+
 ## 📄 License
 
-MIT License — © 2025 Ahmed Mostafa Hussein
+This project is released under the [MIT License](./LICENSE).
 
 ---
 
-<a id="contact"></a>
 ## 📬 Contact
 
-- **GitHub:** [ahhmedmostafaa](https://github.com/ahhmedmostafaa)
-- **Website:** [ahhmedmostafaa.github.io/AI_Powered_Cybersecurity_Lab](https://ahhmedmostafaa.github.io/AI_Powered_Cybersecurity_Lab)
 - **LinkedIn:** [ahmedmostafahussein](https://www.linkedin.com/in/ahmedmostafahussein)
-- **Email:** a7medmostafa7777@gmail.com
+- **Email:** [a7medmostafa7777@gmail.com](mailto:a7medmostafa7777@gmail.com)
