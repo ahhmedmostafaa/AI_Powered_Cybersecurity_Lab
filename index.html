@@ -474,6 +474,21 @@
     .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
     .to-top:hover { background: var(--accent); color: #fff; }
     @media (prefers-reduced-motion: reduce) { .arch-arrow .ic, .arch-box.highlight { animation: none; } html { scroll-behavior: auto; } }
+
+    /* ═══════════════ LICENSE BADGES ═══════════════ */
+    .lic { display: inline-block; margin-top: 10px; position: relative; white-space: nowrap;
+      font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .3px;
+      padding: 3px 9px; border-radius: 99px; color: var(--accent);
+      background: var(--accent-light); border: 1px solid var(--border-strong); }
+    .lic.prop { color: var(--gold); background: var(--gold-dim); border-color: color-mix(in srgb, var(--gold) 55%, transparent); }
+    .tech-card.prop { border-color: color-mix(in srgb, var(--gold) 38%, transparent); }
+    .tech-card.prop:hover { border-color: var(--gold); box-shadow: 0 6px 24px var(--glow-gold); }
+    .tech-legend { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; margin-top: 28px; font-size: 12px; color: var(--text-muted); }
+    .tech-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: var(--accent); box-shadow: 0 0 8px var(--glow); }
+    .tech-legend i.g { background: var(--gold); box-shadow: 0 0 8px var(--glow-gold); }
+    @media (min-width: 901px) { .tech-grid { grid-template-columns: repeat(5, 1fr); } }
+    @media (max-width: 500px) { .tech-grid { grid-template-columns: repeat(2, 1fr); } }
+    .tech-legend .note { flex-basis: 100%; font-size: 11px; line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -645,19 +660,24 @@
 <!-- TECH STACK -->
 <div id="tech" class="section">
   <p class="section-label">Technology Stack</p>
-  <h2 class="section-title">Open-source tools, enterprise-grade results</h2>
-  <p class="section-sub">Every component is freely deployable — no proprietary licensing required.</p>
+  <h2 class="section-title">Open-source defense stack, built on free-to-use infrastructure</h2>
+  <p class="section-sub">Detection, machine learning and automation run entirely on open-source components. The lab itself is virtualized with VMware Workstation Pro — proprietary, but free to use.</p>
   <div class="tech-grid">
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-chart-dots"/></svg></div><div class="tech-name">XGBoost 2.0.3</div><div class="tech-role">ML classifier</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></div><div class="tech-name">Suricata 8.0.3</div><div class="tech-role">Signature IDS</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-activity"/></svg></div><div class="tech-name">Zeek 8.1.1</div><div class="tech-role">Network monitor</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-wall"/></svg></div><div class="tech-name">pfSense 2.7.2</div><div class="tech-role">Firewall / NAT</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-topology-star"/></svg></div><div class="tech-name">GNS3</div><div class="tech-role">Network simulator</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-server"/></svg></div><div class="tech-name">VMware 16 Pro</div><div class="tech-role">Hypervisor</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-brand-python"/></svg></div><div class="tech-name">Python 3.10</div><div class="tech-role">Orchestration</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-antenna"/></svg></div><div class="tech-name">Scapy v2.5.0</div><div class="tech-role">Packet capture</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-skull"/></svg></div><div class="tech-name">Kali 2025.2</div><div class="tech-role">Adversary node</div></div>
-    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-device-laptop"/></svg></div><div class="tech-name">Ubuntu 24.04</div><div class="tech-role">AI server OS</div></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-chart-dots"/></svg></div><div class="tech-name">XGBoost 2.0.3</div><div class="tech-role">ML classifier</div><span class="lic">Apache-2.0</span></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></div><div class="tech-name">Suricata 8.0.3</div><div class="tech-role">Signature IDS</div><span class="lic">GPL-2.0</span></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-activity"/></svg></div><div class="tech-name">Zeek 8.1.1</div><div class="tech-role">Network monitor</div><span class="lic">BSD-style</span></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-wall"/></svg></div><div class="tech-name">pfSense 2.7.2</div><div class="tech-role">Firewall / NAT</div><span class="lic">Apache-2.0</span></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-topology-star"/></svg></div><div class="tech-name">GNS3</div><div class="tech-role">Network simulator</div><span class="lic">GPL-3.0</span></div>
+    <div class="tech-card fade-in prop"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-server"/></svg></div><div class="tech-name">VMware 16 Pro</div><div class="tech-role">Hypervisor</div><span class="lic prop">Proprietary</span></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-brand-python"/></svg></div><div class="tech-name">Python 3.10</div><div class="tech-role">Orchestration</div><span class="lic">PSF</span></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-antenna"/></svg></div><div class="tech-name">Scapy v2.5.0</div><div class="tech-role">Packet capture</div><span class="lic">GPL-2.0</span></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-skull"/></svg></div><div class="tech-name">Kali 2025.2</div><div class="tech-role">Adversary node</div><span class="lic">Open Source</span></div>
+    <div class="tech-card fade-in"><div class="tech-icon"><svg class="ic" aria-hidden="true"><use href="#i-device-laptop"/></svg></div><div class="tech-name">Ubuntu 24.04</div><div class="tech-role">AI server OS</div><span class="lic">Open Source</span></div>
+  </div>
+  <div class="tech-legend fade-in">
+    <span><i></i>Open-source license</span>
+    <span><i class="g"></i>Free to use, proprietary</span>
+    <span class="note">Licenses checked against each project’s repository. Kali Linux and Ubuntu are distributions that bundle many packages, each under its own license.</span>
   </div>
 </div>
 
